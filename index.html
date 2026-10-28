@@ -44,20 +44,14 @@
     border:1px solid var(--border);
     border-radius:20px;
     padding:44px 44px 40px;
-    box-shadow:
-      0 40px 100px rgba(0,0,0,0.6),
-      0 0 0 1px rgba(255,255,255,0.02) inset,
-      0 1px 0 rgba(255,255,255,0.04) inset;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset, 0 1px 0 rgba(255,255,255,0.04) inset;
     animation:fadeIn 0.4s ease;
     position:relative;
     overflow:hidden;
   }
   .container::before {
-    content:'';
-    position:absolute;
-    top:0; left:0; right:0; height:1px;
-    background:linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity:0.6;
+    content:''; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent); opacity:0.6;
   }
   @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
   @keyframes slideUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
@@ -76,40 +70,25 @@
 
   .field { margin-bottom:18px; }
   label { display:block; margin-bottom:8px; font-weight:600; color:var(--text-2); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; }
-  input[type="text"], input[type="password"], select {
-    width:100%; padding:15px 18px;
-    background:rgba(10,15,28,0.8);
-    border:1px solid var(--border);
-    border-radius:10px; color:var(--text-0);
-    font-size:1rem; font-weight:500;
-    transition:border-color .15s, box-shadow .15s;
-    outline:none; appearance:none; font-family:inherit;
+  input[type="text"], select {
+    width:100%; padding:15px 18px; background:rgba(10,15,28,0.8); border:1px solid var(--border); border-radius:10px;
+    color:var(--text-0); font-size:1rem; font-weight:500; transition:border-color .15s, box-shadow .15s; outline:none; appearance:none; font-family:inherit;
   }
-  input[type="text"]:focus, input[type="password"]:focus, select:focus {
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px var(--accent-glow);
-  }
+  input[type="text"]:focus, select:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
   input::placeholder { color:var(--text-3); }
 
   .btn {
-    display:inline-flex; align-items:center; justify-content:center;
-    gap:8px; width:100%; padding:15px 20px;
-    background:var(--accent); color:#04121e;
-    border:none; border-radius:10px;
-    font-size:1rem; font-weight:700; cursor:pointer;
-    transition:background .15s, transform .1s, box-shadow .15s;
-    margin-top:10px; letter-spacing:0.01em; font-family:inherit;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:15px 20px;
+    background:var(--accent); color:#04121e; border:none; border-radius:10px; font-size:1rem; font-weight:700;
+    cursor:pointer; transition:background .15s, transform .1s, box-shadow .15s; margin-top:10px; letter-spacing:0.01em; font-family:inherit;
   }
   .btn:hover { background:#7dd3fc; box-shadow:0 8px 24px rgba(56,189,248,0.25); }
   .btn:active { transform:translateY(1px); }
   .btn.secondary { background:transparent; color:var(--text-1); border:1px solid var(--border-hi); }
   .btn.secondary:hover { background:rgba(56,189,248,0.06); border-color:var(--accent); color:var(--text-0); box-shadow:none; }
   .btn.success { background:var(--ok); color:#04210e; }
-  .btn.success:hover { background:#4ade80; box-shadow:0 8px 24px rgba(34,197,94,0.25); }
   .btn.danger { background:transparent; color:#fca5a5; border:1px solid rgba(239,68,68,0.4); }
-  .btn.danger:hover { background:rgba(239,68,68,0.1); border-color:var(--err); color:#fecaca; }
   .btn.small { padding:6px 10px; font-size:0.8rem; width:auto; margin-top:0; border-radius:8px; }
-  .btn:disabled { opacity:0.4; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
 
   .btn-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
   .top-actions { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
@@ -117,19 +96,11 @@
 
   .levels { display:grid; gap:10px; margin-top:20px; }
   .level-card {
-    padding:20px 24px;
-    background:rgba(15,23,42,0.6);
-    border:1px solid var(--border);
-    border-radius:12px; cursor:pointer;
-    transition:border-color .15s, background .15s, transform .15s;
-    display:flex; justify-content:space-between; align-items:center;
-    gap:16px; position:relative; overflow:hidden;
+    padding:20px 24px; background:rgba(15,23,42,0.6); border:1px solid var(--border); border-radius:12px;
+    cursor:pointer; transition:border-color .15s, background .15s, transform .15s; display:flex; justify-content:space-between;
+    align-items:center; gap:16px; position:relative; overflow:hidden;
   }
-  .level-card::before {
-    content:''; position:absolute; left:0; top:0; bottom:0;
-    width:3px; background:var(--accent-color,var(--accent));
-    transition:width .15s;
-  }
+  .level-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent-color,var(--accent)); transition:width .15s; }
   .level-card:hover { border-color:var(--accent-color,var(--accent)); background:rgba(30,41,59,0.6); transform:translateX(4px); }
   .level-card:hover::before { width:4px; }
   .level-card .info h3 { font-size:1.05rem; margin-bottom:4px; display:flex; align-items:center; gap:8px; font-weight:700; color:var(--text-0); }
@@ -145,40 +116,21 @@
 
   .progress-bar { width:100%; height:4px; background:var(--bg-2); border-radius:2px; overflow:hidden; margin-bottom:6px; }
   .progress-fill { height:100%; background:var(--accent); width:0%; transition:width .35s ease; }
-
   .q-meta { display:flex; justify-content:space-between; color:var(--text-3); font-size:0.75rem; margin-bottom:16px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; }
   .question { font-size:1.2rem; font-weight:600; margin-bottom:24px; line-height:1.55; color:var(--text-0); animation:slideUp 0.25s ease; }
 
   .options { display:grid; gap:10px; }
   .option {
-    padding:16px 20px;
-    background:rgba(15,23,42,0.5);
-    border:1px solid var(--border);
-    border-radius:10px; cursor:pointer;
-    transition:border-color .15s, background .15s;
-    font-size:0.95rem; display:flex; align-items:center;
-    gap:14px; color:var(--text-1); text-align:left;
-    font-weight:500; font-family:inherit;
-    animation:slideUp 0.25s ease; animation-fill-mode:both;
-    line-height:1.45;
+    padding:16px 20px; background:rgba(15,23,42,0.5); border:1px solid var(--border); border-radius:10px; cursor:pointer;
+    transition:border-color .15s, background .15s; font-size:0.95rem; display:flex; align-items:center; gap:14px;
+    color:var(--text-1); text-align:left; font-weight:500; font-family:inherit; animation:slideUp 0.25s ease; animation-fill-mode:both; line-height:1.45;
   }
-  .option:nth-child(1) { animation-delay:0.03s; }
-  .option:nth-child(2) { animation-delay:0.06s; }
-  .option:nth-child(3) { animation-delay:0.09s; }
-  .option:nth-child(4) { animation-delay:0.12s; }
-  .option:nth-child(5) { animation-delay:0.15s; }
   .option:hover:not(.disabled) { border-color:var(--border-hi); background:rgba(30,41,59,0.6); color:var(--text-0); }
   .option.selected { border-color:var(--accent); background:rgba(56,189,248,0.08); color:var(--text-0); }
   .option.correct { border-color:var(--ok); background:rgba(34,197,94,0.08); color:var(--text-0); animation:pulse 0.4s; }
   .option.wrong { border-color:var(--err); background:rgba(239,68,68,0.08); color:var(--text-0); animation:shake 0.35s; }
   .option.disabled { pointer-events:none; }
-  .option .letter {
-    width:30px; height:30px; border-radius:6px;
-    background:var(--bg-2); display:flex; align-items:center;
-    justify-content:center; font-weight:700; font-size:0.82rem;
-    flex-shrink:0; transition:background .15s, color .15s;
-    color:var(--text-2);
-  }
+  .option .letter { width:30px; height:30px; border-radius:6px; background:var(--bg-2); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.82rem; flex-shrink:0; transition:background .15s, color .15s; color:var(--text-2); }
   .option.correct .letter { background:var(--ok); color:#fff; }
   .option.wrong .letter { background:var(--err); color:#fff; }
   .option.selected .letter { background:var(--accent); color:#04121e; }
@@ -208,13 +160,8 @@
   .recommendations li b { color:var(--text-0); font-weight:600; display:block; margin-bottom:4px; }
 
   .promotion { background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.3); border-radius:12px; padding:16px 20px; margin:16px 0; color:#86efac; font-weight:600; text-align:center; font-size:0.95rem; }
-  .promotion b { color:#4ade80; }
-
   .info-box { background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25); border-radius:12px; padding:14px 18px; margin:16px 0; color:#7dd3fc; font-size:0.88rem; text-align:center; line-height:1.5; }
-  .info-box b { color:#38bdf8; font-weight:700; }
-
   .warn-box { background:rgba(234,179,8,0.06); border:1px solid rgba(234,179,8,0.25); border-radius:12px; padding:14px 18px; margin:16px 0; color:#fde047; font-size:0.88rem; text-align:center; line-height:1.5; }
-  .warn-box b { color:#eab308; font-weight:700; }
 
   .table-wrap { margin-top:24px; background:rgba(15,23,42,0.5); border-radius:12px; border:1px solid var(--border); overflow:hidden; }
   .table-wrap h4 { padding:14px 20px; background:rgba(15,23,42,0.8); color:var(--text-2); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; font-weight:700; }
@@ -224,221 +171,40 @@
   th { color:var(--text-3); font-weight:700; text-transform:uppercase; font-size:0.68rem; letter-spacing:0.1em; background:rgba(10,15,28,0.5); }
   td { color:var(--text-1); }
   tr:last-child td { border-bottom:none; }
-  tr:hover td { background:rgba(56,189,248,0.03); }
   .lvl-pill { display:inline-block; padding:4px 10px; border-radius:6px; font-size:0.7rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; }
   .score-cell { font-weight:700; color:var(--accent); }
 
   .shop-info { text-align:center; color:var(--text-3); font-size:0.78rem; margin-bottom:20px; padding:10px 14px; background:rgba(10,15,28,0.5); border-radius:8px; border:1px solid var(--border); letter-spacing:0.02em; }
   .shop-info b { color:var(--text-1); font-weight:600; }
   .shop-info .tab { color:var(--accent); font-weight:600; }
-
   .empty-state { text-align:center; padding:48px 20px; color:var(--text-3); }
   .empty-state .icon { font-size:2.5rem; margin-bottom:12px; opacity:0.5; }
   .empty-state p { font-size:0.9rem; }
 
-  /* ============ ТАБЫ МАГАЗИНОВ ============ */
-  .shop-tabs {
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    padding:14px 16px;
-    background:rgba(10,15,28,0.5);
-    border-bottom:1px solid var(--border);
-  }
-  .shop-tab {
-    padding:8px 14px;
-    background:rgba(15,23,42,0.6);
-    border:1px solid var(--border);
-    border-radius:8px;
-    font-size:0.82rem;
-    font-weight:600;
-    color:var(--text-2);
-    cursor:pointer;
-    transition:border-color .15s, background .15s, color .15s;
-    font-family:inherit;
-    white-space:nowrap;
-  }
+  .shop-tabs { display:flex; gap:8px; flex-wrap:wrap; padding:14px 16px; background:rgba(10,15,28,0.5); border-bottom:1px solid var(--border); }
+  .shop-tab { padding:8px 14px; background:rgba(15,23,42,0.6); border:1px solid var(--border); border-radius:8px; font-size:0.82rem; font-weight:600; color:var(--text-2); cursor:pointer; transition:border-color .15s, background .15s, color .15s; font-family:inherit; white-space:nowrap; }
   .shop-tab:hover { border-color:var(--border-hi); color:var(--text-1); }
-  .shop-tab.active {
-    background:rgba(56,189,248,0.1);
-    border-color:var(--accent);
-    color:var(--accent);
-  }
-  .shop-tab .tab-count {
-    display:inline-block;
-    margin-left:6px;
-    padding:1px 6px;
-    border-radius:10px;
-    background:rgba(148,163,184,0.15);
-    font-size:0.7rem;
-    color:var(--text-3);
-  }
-  .shop-tab.active .tab-count {
-    background:rgba(56,189,248,0.2);
-    color:var(--accent);
-  }
-
-  /* ============ МОДАЛЬНОЕ ОКНО АДМИНА ============ */
-  .modal-overlay {
-    position:fixed;
-    top:0; left:0; right:0; bottom:0;
-    background:rgba(0,0,0,0.7);
-    backdrop-filter:blur(4px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:1000;
-    animation:fadeIn 0.2s ease;
-  }
-  .modal {
-    width:100%;
-    max-width:400px;
-    background:linear-gradient(180deg, rgba(15,23,42,0.98) 0%, rgba(10,15,28,0.98) 100%);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:28px;
-    box-shadow:0 40px 100px rgba(0,0,0,0.8);
-    animation:slideUp 0.25s ease;
-  }
-  .modal h3 {
-    font-size:1.15rem;
-    font-weight:700;
-    margin-bottom:6px;
-    color:var(--text-0);
-  }
-  .modal p {
-    font-size:0.85rem;
-    color:var(--text-2);
-    margin-bottom:20px;
-    line-height:1.5;
-  }
-  .modal-error {
-    display:none;
-    margin-top:12px;
-    padding:10px 14px;
-    background:rgba(239,68,68,0.1);
-    border:1px solid rgba(239,68,68,0.3);
-    border-radius:8px;
-    color:#fca5a5;
-    font-size:0.82rem;
-    text-align:center;
-  }
-  .modal-error.show { display:block; animation:shake 0.3s; }
-
-  /* ============ АДАПТИВ ============ */
-  @media (max-width: 768px) {
-    body { padding: 20px 12px; }
-    .container { padding: 32px 28px 28px; border-radius: 16px; }
-    .brand-icon { width: 48px; height: 48px; }
-    .brand-title { font-size: 1.4rem; }
-    .brand-sub { font-size: 0.68rem; letter-spacing: 0.14em; }
-    .page-title { font-size: 1.3rem; }
-    .subtitle { font-size: 0.85rem; margin-bottom: 24px; }
-    .question { font-size: 1.1rem; margin-bottom: 20px; }
-    .option { padding: 14px 16px; font-size: 0.92rem; }
-    .btn { padding: 14px 18px; font-size: 0.95rem; }
-    .stats { gap: 10px; }
-    .stat { padding: 14px; }
-    .stat .val { font-size: 1.35rem; }
-    .stat .lbl { font-size: 0.65rem; }
-    .result .score { font-size: 3.5rem; }
-    .result .emoji-big { font-size: 3.5rem; }
-    th, td { padding: 10px 12px; font-size: 0.8rem; }
-  }
+  .shop-tab.active { background:rgba(56,189,248,0.1); border-color:var(--accent); color:var(--accent); }
+  .shop-tab .tab-count { display:inline-block; margin-left:6px; padding:1px 6px; border-radius:10px; background:rgba(148,163,184,0.15); font-size:0.7rem; color:var(--text-3); }
+  .shop-tab.active .tab-count { background:rgba(56,189,248,0.2); color:var(--accent); }
 
   @media (max-width: 600px) {
     body { padding: 0; align-items: stretch; background: linear-gradient(180deg, var(--bg-0) 0%, #060a14 100%); }
-    .container {
-      max-width: 100%; border-radius: 0; border-left: none; border-right: none;
-      padding: 24px 18px 32px; min-height: 100dvh;
-      box-shadow: none; animation: none;
-    }
+    .container { max-width: 100%; border-radius: 0; border-left: none; border-right: none; padding: 24px 18px 32px; min-height: 100dvh; box-shadow: none; animation: none; }
     .container::before { display: none; }
-    .brand { gap: 12px; margin-bottom: 4px; flex-wrap: nowrap; }
+    .brand { gap: 12px; margin-bottom: 4px; }
     .brand-icon { width: 40px; height: 40px; }
     .brand-title { font-size: 1.15rem; letter-spacing: -0.01em; }
     .brand-sub { font-size: 0.6rem; letter-spacing: 0.12em; margin-top: 1px; }
-    .page-title { font-size: 1.15rem; margin: 6px 0 4px; }
-    .subtitle { font-size: 0.82rem; margin-bottom: 20px; line-height: 1.45; }
-    .field { margin-bottom: 14px; }
-    label { font-size: 0.7rem; margin-bottom: 6px; letter-spacing: 0.08em; }
-    input[type="text"], input[type="password"], select { padding: 14px 16px; font-size: 16px; border-radius: 10px; }
-    .btn { padding: 16px 18px; font-size: 0.98rem; margin-top: 8px; border-radius: 10px; min-height: 52px; }
-    .btn.small { min-height: auto; padding: 8px 12px; font-size: 0.82rem; }
-    .btn-row { grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
-    .top-actions { flex-direction: column; gap: 10px; margin-top: 16px; }
-    .top-actions .btn { min-width: 0; }
-    .levels { gap: 10px; margin-top: 16px; }
+    .btn { min-height: 52px; }
+    .btn-row { grid-template-columns: 1fr; gap: 10px; }
+    .top-actions { flex-direction: column; }
     .level-card { padding: 16px 18px; flex-direction: column; align-items: flex-start; gap: 10px; }
-    .level-card .info h3 { font-size: 1rem; }
-    .level-card .info p { font-size: 0.78rem; }
-    .level-card .info .level-hint { font-size: 0.68rem; padding: 4px 8px; }
-    .level-badge { align-self: flex-start; padding: 5px 10px; font-size: 0.65rem; }
-    .question { font-size: 1.05rem; margin-bottom: 18px; line-height: 1.5; }
-    .q-meta { font-size: 0.7rem; margin-bottom: 12px; letter-spacing: 0.05em; }
-    .options { gap: 8px; }
-    .option { padding: 14px 16px; font-size: 0.9rem; gap: 12px; min-height: 54px; line-height: 1.4; }
-    .option .letter { width: 28px; height: 28px; font-size: 0.75rem; }
-    .feedback { padding: 12px 14px; font-size: 0.85rem; }
-    .feedback .hint { font-size: 0.75rem; }
-    .result { padding: 4px 0; }
-    .result .emoji-big { font-size: 3rem; }
-    .result h2 { font-size: 1.25rem; margin-bottom: 6px; }
-    .result .score { font-size: 3rem; margin: 8px 0; }
-    .result p { font-size: 0.85rem; margin-bottom: 14px; }
-    .stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 18px 0; }
+    .option { min-height: 54px; }
+    .stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
     .stat { padding: 12px 8px; text-align: center; }
-    .stat .val { font-size: 1.2rem; }
-    .stat .lbl { font-size: 0.6rem; letter-spacing: 0.06em; margin-top: 4px; }
-    .promotion { padding: 14px 16px; font-size: 0.88rem; margin: 14px 0; }
-    .info-box, .warn-box { padding: 12px 14px; font-size: 0.82rem; margin: 14px 0; }
-    .recommendations { padding: 16px; margin: 16px 0; }
-    .recommendations h3 { font-size: 0.78rem; margin-bottom: 10px; }
-    .recommendations li { font-size: 0.82rem; padding: 8px 0; }
-    .recommendations li b { font-size: 0.85rem; }
-    .table-wrap { margin-top: 18px; border-radius: 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .table-wrap h4 { padding: 12px 14px; font-size: 0.68rem; letter-spacing: 0.08em; }
+    .table-wrap { overflow-x: auto; }
     table { min-width: 480px; }
-    th, td { padding: 10px 12px; font-size: 0.78rem; white-space: nowrap; }
-    th { font-size: 0.62rem; }
-    .lvl-pill { font-size: 0.65rem; padding: 3px 8px; }
-    .score-cell { font-size: 0.8rem; }
-    .shop-info { font-size: 0.72rem; padding: 8px 12px; margin-bottom: 16px; line-height: 1.5; }
-    .empty-state { padding: 32px 16px; }
-    .empty-state .icon { font-size: 2rem; }
-    .empty-state p { font-size: 0.85rem; }
-    .shop-tabs { padding: 12px; gap: 6px; }
-    .shop-tab { padding: 7px 12px; font-size: 0.78rem; }
-    .modal { padding: 24px 20px; }
-  }
-
-  @media (max-width: 360px) {
-    .container { padding: 20px 14px 28px; }
-    .brand-title { font-size: 1rem; }
-    .brand-icon { width: 34px; height: 34px; }
-    .brand-sub { font-size: 0.55rem; letter-spacing: 0.1em; }
-    .page-title { font-size: 1.05rem; }
-    .subtitle { font-size: 0.78rem; }
-    .question { font-size: 0.98rem; }
-    .option { font-size: 0.85rem; padding: 12px 14px; }
-    .btn { font-size: 0.92rem; padding: 14px 16px; }
-    .result .score { font-size: 2.5rem; }
-    .stats { grid-template-columns: 1fr; }
-  }
-
-  @media (orientation: landscape) and (max-height: 600px) {
-    body { align-items: flex-start; padding-top: 12px; }
-    .container { padding: 20px 24px; }
-  }
-
-  @media (hover: none) and (pointer: coarse) {
-    .option:hover:not(.disabled) { transform: none; }
-    .level-card:hover { transform: none; }
-    .btn:hover { transform: none; }
-    .option:active:not(.disabled) { background: rgba(56,189,248,0.12); border-color: var(--accent); }
-    .btn:active { transform: translateY(1px); }
-    .level-card:active { background: rgba(56,189,248,0.06); }
   }
 </style>
 </head>
@@ -447,12 +213,7 @@
 <div id="modalContainer"></div>
 
 <script>
-/* ==================== АДМИН-ДОСТУП ====================
-   ⚠️ ВАЖНО: Логин и пароль хранятся В КОДЕ страницы.
-   Это защита "от случайного удаления", а не полноценная безопасность.
-   Любой, кто откроет исходный код, увидит эти данные.
-   Для настоящей защиты нужен бэкенд.
-*/
+/* ==================== АДМИН-ДОСТУП ==================== */
 const ADMIN_CREDENTIALS = {
   login: 'admin',
   password: 'admin'
@@ -551,24 +312,43 @@ let state = {
   isAdmin: false
 };
 
-/* ==================== API И ХРАНИЛИЩЕ ==================== */
-let allResultsData = []; // Глобальная переменная для всех данных с сервера
-let isLoading = true;    // Флаг загрузки
+/* ==================== API И ХРАНИЛИЩЕ (Netlify) ==================== */
+let allResultsData = [];
 
-// Загрузка всех данных с сервера
 async function fetchAllResults() {
   try {
     const response = await fetch('/.netlify/functions/get-results');
+    if (!response.ok) throw new Error('Network response was not ok');
     allResultsData = await response.json();
-    isLoading = false;
   } catch (error) {
     console.error('Ошибка загрузки данных:', error);
-    alert('Не удалось загрузить данные с сервера. Проверьте интернет.');
-    isLoading = false;
+    allResultsData = [];
   }
 }
 
-// Вспомогательные функции для работы с загруженными данными в памяти
+async function recordAttempt(shopId, tab, level, score, total) {
+  const newRecord = {
+    shopId,
+    tabNumber: tab,
+    level,
+    score,
+    total,
+    date: new Date().toISOString()
+  };
+
+  try {
+    await fetch('/.netlify/functions/save-result', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newRecord)
+    });
+    allResultsData.push(newRecord);
+  } catch (error) {
+    console.error('Ошибка сохранения:', error);
+    alert('Не удалось сохранить результат на сервере.');
+  }
+}
+
 function getAllShops() {
   const shops = new Set(allResultsData.map(r => r.shopId));
   return Array.from(shops).sort();
@@ -590,23 +370,21 @@ function getShopData(shopId) {
     });
   });
 
-  // Вычисляем текущий уровень и количество попыток
   Object.keys(employees).forEach(tab => {
     const emp = employees[tab];
-    emp.attempts = emp.history.length;
-    // Сортируем историю по дате
     emp.history.sort((a, b) => new Date(a.date) - new Date(b.date));
+    emp.attempts = emp.history.length;
     
-    // Восстанавливаем логику повышения
-    emp.level = 'intern';
+    let currentLevel = 'intern';
     emp.history.forEach(h => {
       const percent = (h.score / h.total) * 100;
       if (percent >= PASS_PERCENT) {
-        if (emp.level === 'intern' && h.level === 'intern') emp.level = 'junior';
-        else if (emp.level === 'junior' && h.level === 'middle') emp.level = 'senior';
-        else if (emp.level === 'middle' && h.level === 'middle') emp.level = 'senior';
+        if (currentLevel === 'intern' && h.level === 'intern') currentLevel = 'junior';
+        else if (currentLevel === 'junior' && h.level === 'middle') currentLevel = 'senior';
+        else if (currentLevel === 'middle' && h.level === 'middle') currentLevel = 'senior';
       }
     });
+    emp.level = currentLevel;
   });
 
   return { employees };
@@ -617,125 +395,8 @@ function getEmployee(shopId, tab) {
   return shop.employees[tab] || null;
 }
 
-// Сохранение результата на сервер
-async function recordAttempt(shopId, tab, level, score, total) {
-  const newRecord = {
-    shopId,
-    tabNumber: tab,
-    level,
-    score,
-    total,
-    date: new Date().toISOString()
-  };
-
-  try {
-    await fetch('/.netlify/functions/save-result', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newRecord)
-    });
-    
-    // Обновляем локальную копию, чтобы не перезагружать страницу
-    allResultsData.push(newRecord);
-    return getEmployee(shopId, tab); // Возвращаем обновленные данные сотрудника
-  } catch (error) {
-    console.error('Ошибка сохранения:', error);
-    alert('Не удалось сохранить результат. Проверьте интернет.');
-    throw error;
-  }
-}
-
-// Удаление сотрудника (пока оставим заглушку для локального удаления, 
-// полноценное удаление с сервера требует отдельной функции, которую мы сделаем позже)
-function deleteEmployee(shopId, tab) {
-  alert("Удаление временно недоступно. Требуется настройка серверной функции удаления.");
-}
-function deleteShop(shopId) {
-  alert("Удаление магазина временно недоступно. Требуется настройка серверной функции удаления.");
-}
-
-/* ==================== АДМИН-МОДАЛКА ==================== */
-function openAdminLogin(onSuccess) {
-  const modalContainer = document.getElementById('modalContainer');
-  modalContainer.innerHTML = `
-    <div class="modal-overlay" id="adminModal">
-      <div class="modal">
-        <h3>🔐 Вход администратора</h3>
-        <p>Только администратор может удалять данные. Введите логин и пароль.</p>
-        <div class="field">
-          <label>Логин</label>
-          <input type="text" id="adminLogin" placeholder="login" autocomplete="off">
-        </div>
-        <div class="field">
-          <label>Пароль</label>
-          <input type="password" id="adminPassword" placeholder="password" autocomplete="off">
-        </div>
-        <div class="modal-error" id="adminError">Неверный логин или пароль</div>
-        <button class="btn" id="adminSubmit">Войти</button>
-        <button class="btn secondary" id="adminCancel" style="margin-top:10px;">Отмена</button>
-      </div>
-    </div>
-  `;
-
-  const modal = document.getElementById('adminModal');
-  const loginInput = document.getElementById('adminLogin');
-  const passwordInput = document.getElementById('adminPassword');
-  const errorBox = document.getElementById('adminError');
-
-  const tryLogin = () => {
-    const login = loginInput.value.trim();
-    const password = passwordInput.value;
-    if (login === ADMIN_CREDENTIALS.login && password === ADMIN_CREDENTIALS.password) {
-      state.isAdmin = true;
-      closeModal();
-      if (typeof onSuccess === 'function') onSuccess();
-    } else {
-      errorBox.classList.add('show');
-      setTimeout(() => errorBox.classList.remove('show'), 2500);
-      passwordInput.value = '';
-      passwordInput.focus();
-    }
-  };
-
-  const closeModal = () => {
-    modalContainer.innerHTML = '';
-  };
-
-  document.getElementById('adminSubmit').onclick = tryLogin;
-  document.getElementById('adminCancel').onclick = closeModal;
-
-  [loginInput, passwordInput].forEach(inp => {
-    inp.addEventListener('keypress', e => {
-      if (e.key === 'Enter') tryLogin();
-    });
-  });
-
-  // Закрытие по клику на фон
-  modal.onclick = (e) => {
-    if (e.target === modal) closeModal();
-  };
-
-  // Закрытие по Escape
-  const escHandler = (e) => {
-    if (e.key === 'Escape') {
-      closeModal();
-      document.removeEventListener('keydown', escHandler);
-    }
-  };
-  document.addEventListener('keydown', escHandler);
-
-  // Фокус на логин (только если не мобильный)
-  if (window.innerWidth > 600) loginInput.focus();
-}
-
-/* Запрос действия админа — если уже админ, сразу выполняем, иначе — модалка */
-function requireAdmin(action) {
-  if (state.isAdmin) {
-    action();
-    return;
-  }
-  openAdminLogin(action);
-}
+function deleteEmployee() { alert("Удаление временно недоступно."); }
+function deleteShop() { alert("Удаление временно недоступно."); }
 
 /* ==================== УТИЛИТЫ ==================== */
 function levelName(l) { return LEVEL_NAMES[l] || l; }
@@ -781,35 +442,6 @@ function prepareSession(level) {
   });
 }
 
-/* ==================== CSV ==================== */
-function exportShopCSV(shopId) {
-  const shop = getShopData(shopId);
-  const employees = Object.entries(shop.employees || {});
-  if (employees.length === 0) { alert('Нет данных для экспорта'); return; }
-
-  const rows = [['Табельный', 'Текущий уровень', 'Попыток', 'Лучший результат', 'Последняя попытка']];
-  employees.forEach(([tab, data]) => {
-    const best = data.history.length > 0
-      ? data.history.reduce((acc, h) => (h.score / h.total) > acc.p ? { p: h.score / h.total, h } : acc, { p: -1, h: null }).h
-      : null;
-    const last = data.history.length > 0 ? data.history[data.history.length - 1] : null;
-    rows.push([
-      tab, levelName(data.level), data.attempts,
-      best ? `${best.score}/${best.total}` : '—',
-      last ? `${levelName(last.level)} ${last.score}/${last.total} (${formatDate(last.date)})` : '—'
-    ]);
-  });
-
-  const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(';')).join('\n');
-  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `FaceRecognitionExam_shop_${shopId}_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
 /* ==================== РЕНДЕР ==================== */
 const app = document.getElementById('app');
 
@@ -834,7 +466,6 @@ function renderStart() {
         <button class="btn secondary" id="viewResultsBtn">📊 Все результаты магазинов (${shops.length})</button>
       </div>
     ` : ''}
-    ${state.isAdmin ? `<div class="info-box" style="margin-top:16px;">🔓 Вы вошли как администратор</div>` : ''}
   `;
 
   const shopInput = document.getElementById('shopInput');
@@ -847,25 +478,15 @@ function renderStart() {
     if (!tab) { alert('Введите табельный номер'); tabInput.focus(); return; }
     state.shopId = shop;
     state.tabNumber = tab;
-    getOrCreateEmployee(shop, tab);
     renderLevels();
   };
-
-  [shopInput, tabInput].forEach(inp => {
-    inp.addEventListener('keypress', e => {
-      if (e.key === 'Enter') document.getElementById('startBtn').click();
-    });
-  });
 
   if (hasShops) {
     document.getElementById('viewResultsBtn').onclick = () => {
       state.viewShopId = shops[0];
       renderResultsView();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
   }
-
-  if (window.innerWidth > 600) shopInput.focus();
 }
 
 function renderLevels() {
@@ -954,24 +575,20 @@ function renderLevels() {
       state.selectedMulti = []; state.wrongHints = [];
       state.sessionQuestions = prepareSession(state.level);
       renderQuestion();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
   });
 
   document.getElementById('backBtn').onclick = () => {
     state.shopId = null; state.tabNumber = null; state.sessionQuestions = [];
     renderStart();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   document.getElementById('viewResultsBtn').onclick = () => {
     state.viewShopId = state.shopId;
     renderResultsView();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 }
 
-/* ==================== РЕЗУЛЬТАТЫ С ТАБАМИ МАГАЗИНОВ ==================== */
 function renderResultsView() {
   const shops = getAllShops();
   if (shops.length === 0) {
@@ -984,10 +601,7 @@ function renderResultsView() {
       </div>
       <button class="btn secondary" id="backBtn" style="margin-top:20px;">← На главную</button>
     `;
-    document.getElementById('backBtn').onclick = () => {
-      renderStart();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    document.getElementById('backBtn').onclick = renderStart;
     return;
   }
 
@@ -1008,7 +622,6 @@ function renderResultsView() {
   const totalAttempts = employees.reduce((s, [, d]) => s + d.attempts, 0);
   const promoted = employees.filter(([, d]) => d.level !== 'intern').length;
 
-  /* Табы магазинов */
   const shopTabsHtml = `
     <div class="shop-tabs" id="shopTabs">
       ${shops.map(s => {
@@ -1031,15 +644,7 @@ function renderResultsView() {
   ` : `
     <table>
       <thead>
-        <tr>
-          <th>#</th>
-          <th>Табельный</th>
-          <th>Уровень</th>
-          <th>Попыток</th>
-          <th>Лучший</th>
-          <th>Последняя</th>
-          <th></th>
-        </tr>
+        <tr><th>#</th><th>Табельный</th><th>Уровень</th><th>Попыток</th><th>Лучший</th><th>Последняя</th><th></th></tr>
       </thead>
       <tbody>
         ${employees.map(([tab, data], i) => {
@@ -1079,70 +684,35 @@ function renderResultsView() {
     <div class="table-wrap">
       <h4>
         <span>Результаты <span class="count">· ${employees.length} сотр.</span></span>
-        ${state.isAdmin ? '<span style="color:#4ade80;font-weight:600;">🔓 Админ</span>' : ''}
       </h4>
       ${shopTabsHtml}
       ${tableHtml}
     </div>
 
     <div class="btn-row" style="margin-top:20px;">
-      <button class="btn success" id="exportBtn">⬇ Скачать CSV</button>
       <button class="btn secondary" id="backBtn">← На главную</button>
     </div>
-    ${shops.length > 1 ? `
-      <button class="btn danger" id="deleteShopBtn" style="margin-top:12px;">🗑 Удалить магазин ${escapeHtml(activeShop)}</button>
-    ` : ''}
-    ${!state.isAdmin ? `
-      <p style="text-align:center;color:#64748b;font-size:0.75rem;margin-top:16px;">
-        Удаление записей — только для администратора
-      </p>
-    ` : ''}
   `;
 
-  /* Переключение табов магазинов */
   document.querySelectorAll('.shop-tab').forEach(tab => {
     tab.onclick = () => {
       state.viewShopId = tab.dataset.shop;
       renderResultsView();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
   });
 
-  document.getElementById('exportBtn').onclick = () => exportShopCSV(activeShop);
   document.getElementById('backBtn').onclick = () => {
     state.viewShopId = null;
     renderStart();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const deleteShopBtn = document.getElementById('deleteShopBtn');
-  if (deleteShopBtn) {
-    deleteShopBtn.onclick = () => {
-      requireAdmin(() => {
-        if (confirm(`Удалить ВСЕ данные магазина ${activeShop}? Это действие необратимо.`)) {
-          deleteShop(activeShop);
-          state.viewShopId = null;
-          renderResultsView();
-        }
-      });
-    };
-  }
-
-  /* Удаление сотрудников — только админ */
   document.querySelectorAll('[data-del-tab]').forEach(btn => {
     btn.onclick = () => {
-      const tab = btn.dataset.delTab;
-      requireAdmin(() => {
-        if (confirm(`Удалить запись табельного ${tab}?`)) {
-          deleteEmployee(activeShop, tab);
-          renderResultsView();
-        }
-      });
+      alert('Удаление временно недоступно.');
     };
   });
 }
 
-/* ==================== ТЕСТ ==================== */
 function renderQuestion() {
   const q = state.sessionQuestions[state.current];
   const total = state.sessionQuestions.length;
@@ -1261,9 +831,11 @@ async function renderResult() {
   const passed = percent >= PASS_PERCENT;
 
   const oldEmp = getEmployee(state.shopId, state.tabNumber);
-const oldLevel = oldEmp ? oldEmp.level : 'intern';
-// Теперь это асинхронный вызов
-const updatedEmp = await recordAttempt(state.shopId, state.tabNumber, state.level, score, total);
+  const oldLevel = oldEmp ? oldEmp.level : 'intern';
+  
+  await recordAttempt(state.shopId, state.tabNumber, state.level, score, total);
+  
+  const updatedEmp = getEmployee(state.shopId, state.tabNumber);
   const newLevel = updatedEmp.level;
   const promoted = LEVEL_ORDER.indexOf(newLevel) > LEVEL_ORDER.indexOf(oldLevel);
 
@@ -1396,3 +968,6 @@ async function init() {
   renderStart();
 }
 init();
+</script>
+</body>
+</html>
