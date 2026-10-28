@@ -26,9 +26,7 @@
   body {
     min-height: 100vh;
     min-height: 100dvh;
-    background:
-      radial-gradient(ellipse 800px 600px at 50% -10%, rgba(56,189,248,0.10), transparent 70%),
-      linear-gradient(180deg, var(--bg-0) 0%, #060a14 100%);
+    background: radial-gradient(ellipse 800px 600px at 50% -10%, rgba(56,189,248,0.10), transparent 70%), linear-gradient(180deg, var(--bg-0) 0%, #060a14 100%);
     color:var(--text-0);
     display:flex;
     align-items:flex-start;
@@ -49,10 +47,7 @@
     position:relative;
     overflow:hidden;
   }
-  .container::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:1px;
-    background:linear-gradient(90deg, transparent, var(--accent), transparent); opacity:0.6;
-  }
+  .container::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, var(--accent), transparent); opacity:0.6; }
   @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
   @keyframes slideUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
   @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.015)} 100%{transform:scale(1)} }
@@ -86,7 +81,6 @@
   .btn:active { transform:translateY(1px); }
   .btn.secondary { background:transparent; color:var(--text-1); border:1px solid var(--border-hi); }
   .btn.secondary:hover { background:rgba(56,189,248,0.06); border-color:var(--accent); color:var(--text-0); box-shadow:none; }
-  .btn.success { background:var(--ok); color:#04210e; }
   .btn.danger { background:transparent; color:#fca5a5; border:1px solid rgba(239,68,68,0.4); }
   .btn.small { padding:6px 10px; font-size:0.8rem; width:auto; margin-top:0; border-radius:8px; }
 
@@ -213,24 +207,12 @@
 <div id="modalContainer"></div>
 
 <script>
-/* ==================== АДМИН-ДОСТУП ==================== */
-const ADMIN_CREDENTIALS = {
-  login: 'admin',
-  password: 'admin'
-};
-
 /* ==================== ИКОНКА БРЕНДА ==================== */
 const BRAND_ICON = `
 <svg class="brand-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <defs>
-    <linearGradient id="camBody" x1="0" y1="0" x2="64" y2="64">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#0284c7"/>
-    </linearGradient>
-    <linearGradient id="camBeam" x1="0" y1="32" x2="64" y2="32">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
-    </linearGradient>
+    <linearGradient id="camBody" x1="0" y1="0" x2="64" y2="64"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0284c7"/></linearGradient>
+    <linearGradient id="camBeam" x1="0" y1="32" x2="64" y2="32"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/><stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/></linearGradient>
   </defs>
   <path d="M26 20 L60 8 L60 56 L26 44 Z" fill="url(#camBeam)"/>
   <rect x="4" y="18" width="28" height="28" rx="6" fill="url(#camBody)"/>
@@ -259,34 +241,34 @@ const BRAND_BLOCK = `
   </div>
 `;
 
-/* ==================== ВОПРОСЫ (по 7 на уровень) ==================== */
+/* ==================== ВОПРОСЫ ==================== */
 const QUESTIONS = {
   junior: [
-    { q: "Что такое FACE RECOGNITION (FR)?", options: ["Система видеонаблюдения, которая записывает все действия клиентов","Технология распознавания лиц с помощью камер, уведомляющая о входе клиента из базы","Приложение для распознавания товаров на полках","Система контроля доступа сотрудников"], correct: 1, hint: "Раздел «Ознакомление с FR» — базовое определение технологии." },
-    { q: "В каком формате хранятся изображения в базе FR?", options: ["В виде обычных фотографий JPG","В векторном формате (база обезличена)","В виде видеозаписей","В текстовом формате с описанием"], correct: 1, hint: "Раздел «Ознакомление с FR» — база обезличена, изображения в векторном формате." },
-    { q: "Что НЕ приходит в уведомлении в Чате?", options: ["Фото клиента","Наименование камеры входа","Домашний адрес клиента","Статус в правоохранительных органах"], correct: 2, hint: "Раздел «Чат с уведомлениями» — состав уведомления." },
-    { q: "Какие действия запрещены при работе с FR? (выберите несколько)", options: ["Показать уведомление коллеге-сотруднику магазина","Копировать/пересылать информацию из Чата","Распространять информацию о работе FR третьим лицам","Подойти к клиенту и показать, что команда поняла, кто он"], correct: 1, multiCorrect: [1, 2, 3], hint: "Раздел «Алгоритм работы» → блок «Запрещено»." },
-    { q: "Клиент спрашивает: «Что за звуковой сигнал?» Что делать сотруднику?", options: ["Объяснить, что это система распознавания лиц","Не комментировать и перенаправить к менеджеру магазина","Сказать, что это технический сбой","Показать клиенту уведомление в Чате"], correct: 1, hint: "Раздел «Обращения клиентов» — перенаправить к менеджеру." },
-    { q: "Кто может прокомментировать клиенту работу системы распознавания?", options: ["Любой сотрудник магазина","Только менеджер магазина, по официальной формулировке","Только охранник","Никто, даже менеджер"], correct: 1, hint: "Раздел «Обращения клиентов» — только менеджер магазина." },
-    { q: "Вы получили уведомление на клиента. Он ведёт себя обычно, ничего не крадёт. Ваши действия?", options: ["Подойти и представиться, чтобы показать — вы его видите","Незаметно наблюдать, оказать customer service как всем клиентам","Вызвать полицию","Сфотографировать его и отправить в Чат"], correct: 1, hint: "Раздел «Алгоритм работы», шаг 2 «Наблюдение»." }
+    { q: "Что такое FACE RECOGNITION (FR)?", options: ["Система видеонаблюдения, которая записывает все действия клиентов","Технология распознавания лиц с помощью камер, уведомляющая о входе клиента из базы","Приложение для распознавания товаров на полках","Система контроля доступа сотрудников"], correct: 1, hint: "Раздел «Ознакомление с FR»." },
+    { q: "В каком формате хранятся изображения в базе FR?", options: ["В виде обычных фотографий JPG","В векторном формате (база обезличена)","В виде видеозаписей","В текстовом формате с описанием"], correct: 1, hint: "Раздел «Ознакомление с FR»." },
+    { q: "Что НЕ приходит в уведомлении в Чате?", options: ["Фото клиента","Наименование камеры входа","Домашний адрес клиента","Статус в правоохранительных органах"], correct: 2, hint: "Раздел «Чат с уведомлениями»." },
+    { q: "Какие действия запрещены при работе с FR? (выберите несколько)", options: ["Показать уведомление коллеге-сотруднику магазина","Копировать/пересылать информацию из Чата","Распространять информацию о работе FR третьим лицам","Подойти к клиенту и показать, что команда поняла, кто он"], correct: 1, multiCorrect: [1, 2, 3], hint: "Раздел «Алгоритм работы»." },
+    { q: "Клиент спрашивает: «Что за звуковой сигнал?» Что делать сотруднику?", options: ["Объяснить, что это система распознавания лиц","Не комментировать и перенаправить к менеджеру магазина","Сказать, что это технический сбой","Показать клиенту уведомление в Чате"], correct: 1, hint: "Раздел «Обращения клиентов»." },
+    { q: "Кто может прокомментировать клиенту работу системы распознавания?", options: ["Любой сотрудник магазина","Только менеджер магазина, по официальной формулировке","Только охранник","Никто, даже менеджер"], correct: 1, hint: "Раздел «Обращения клиентов»." },
+    { q: "Вы получили уведомление на клиента. Он ведёт себя обычно, ничего не крадёт. Ваши действия?", options: ["Подойти и представиться, чтобы показать — вы его видите","Незаметно наблюдать, оказать customer service как всем клиентам","Вызвать полицию","Сфотографировать его и отправить в Чат"], correct: 1, hint: "Раздел «Алгоритм работы»." }
   ],
   middle: [
-    { q: "С помощью чего можно проверить работоспособность FR? (выберите несколько)", options: ["Тест-портрет, распечатанный на А4","iPad с тест-портретом","BlueBird","Позвонить в Поддержку"], correct: 0, multiCorrect: [0, 1], hint: "Раздел «Проверка оборудования» — тест-портрет на А4 или iPad." },
-    { q: "Что делать в первую очередь при отсутствии уведомлений?", options: ["Перезагрузить сервер","Проверить интернет-соединение","Сделать проверку с помощью тест-фото Сара/Алекс","Открыть заявку в ITSM"], correct: 2, hint: "Раздел «Проверка оборудования» — шаг 1: проверка с помощью тест-фото." },
-    { q: "На каком уровне держать портрет при проверке камеры?", options: ["На уровне груди","На уровне лица","Над головой","На уровне пояса"], correct: 1, hint: "Раздел «Проверка оборудования» — держать портрет на уровне лица." },
-    { q: "Какие два тест-портрета используются для проверки?", options: ["Иван и Мария","Сара и Алекс","Тест-1 и Тест-2","Любые два портрета"], correct: 1, hint: "Раздел «Проверка оборудования» — Сара (жен) и Алекс (муж)." },
-    { q: "Что использовать, если нет распечатанных тест-портретов?", options: ["Нарисовать портрет от руки","iPad","Заказать тест-портреты","Обойтись без проверки"], correct: 1, hint: "Раздел «Проверка оборудования» — использовать iPad." },
-    { q: "Как часто нужно проверять работоспособность камер FR?", options: ["Раз в неделю","Ежедневно","Раз в месяц","Только при сбое"], correct: 1, hint: "Раздел «Проверка оборудования» — проверка проводится ежедневно." },
-    { q: "Ты услышал специальный звуковой сигнал. Что делать?", options: ["Необходимо поднять голову и посмотреть на вход","Продолжить заниматься своими задачами","Начать громко всех предупреждать","Уйти на склад"], correct: 0, hint: "Раздел «Алгоритм работы» — при звуковом сигнале поднять голову и посмотреть на вход." }
+    { q: "С помощью чего можно проверить работоспособность FR? (выберите несколько)", options: ["Тест-портрет, распечатанный на А4","iPad с тест-портретом","BlueBird","Позвонить в Поддержку"], correct: 0, multiCorrect: [0, 1], hint: "Раздел «Проверка оборудования»." },
+    { q: "Что делать в первую очередь при отсутствии уведомлений?", options: ["Перезагрузить сервер","Проверить интернет-соединение","Сделать проверку с помощью тест-фото Сара/Алекс","Открыть заявку в ITSM"], correct: 2, hint: "Раздел «Проверка оборудования»." },
+    { q: "На каком уровне держать портрет при проверке камеры?", options: ["На уровне груди","На уровне лица","Над головой","На уровне пояса"], correct: 1, hint: "Раздел «Проверка оборудования»." },
+    { q: "Какие два тест-портрета используются для проверки?", options: ["Иван и Мария","Сара и Алекс","Тест-1 и Тест-2","Любые два портрета"], correct: 1, hint: "Раздел «Проверка оборудования»." },
+    { q: "Что использовать, если нет распечатанных тест-портретов?", options: ["Нарисовать портрет от руки","iPad","Заказать тест-портреты","Обойтись без проверки"], correct: 1, hint: "Раздел «Проверка оборудования»." },
+    { q: "Как часто нужно проверять работоспособность камер FR?", options: ["Раз в неделю","Ежедневно","Раз в месяц","Только при сбое"], correct: 1, hint: "Раздел «Проверка оборудования»." },
+    { q: "Ты услышал специальный звуковой сигнал. Что делать?", options: ["Необходимо поднять голову и посмотреть на вход","Продолжить заниматься своими задачами","Начать громко всех предупреждать","Уйти на склад"], correct: 0, hint: "Раздел «Алгоритм работы»." }
   ],
   senior: [
-    { q: "Кому писать по внутренним сотрудникам при сработке?", options: ["Никому, оставить как есть","Рассказать сотруднику напрямую","Карине Мустафиной","Кристине Филоновой"], correct: 2, hint: "Раздел «Персонал» — внутренние сотрудники: Карина Мустафина." },
-    { q: "Кому писать по внешним подрядчикам (СТО, СБ, клининг) при сработке?", options: ["Карине Мустафиной","Кристине Филоновой","Никому","Напрямую в полицию"], correct: 1, hint: "Раздел «Персонал» — внешние подрядчики: Кристина Филонова." },
-    { q: "Можно ли самостоятельно озвучить сотруднику факт сработки по FR?", options: ["Да, если он ваш друг","Да, если он внутренний сотрудник","Нет, только после согласования с отделом LPS","Да, если он сам спросил"], correct: 2, hint: "Раздел «Персонал» — запрещено без согласования с LPS." },
-    { q: "Что делать, если после теста-фото уведомление не пришло?", options: ["Обратиться к менеджеру","Перезагрузить сервер самостоятельно","Открыть заявку в ITSM","Написать в LPS"], correct: 0, hint: "Раздел «Проверка оборудования» — обратиться к менеджеру." },
-    { q: "Какие статусы в правоохранительных органах бывают в уведомлении?", options: ["«Активен» и «Неактивен»","«Контроль» (не передан) и «В поиске» (передан)","«Открыт» и «Закрыт»","«Новый» и «Старый»"], correct: 1, hint: "Раздел «Чат с уведомлениями» — статусы «контроль» и «в поиске»." },
-    { q: "В течение какого времени сотрудник должен поставить реакцию после сработки?", options: ["30 секунд","60 секунд","2 минуты","5 минут"], correct: 1, hint: "Раздел «Алгоритм работы», шаг 1 «Сработка» — 60 секунд." },
-    { q: "Что нужно учитывать при составлении расписания и планировании брейков для контроля FR?", options: ["Количество клиентов в зале","На смене всегда должен быть сотрудник с чатом","Загрузку касс","Пожелания сотрудников"], correct: 1, hint: "Раздел «Алгоритм работы» — на смене всегда сотрудник с чатом." }
+    { q: "Кому писать по внутренним сотрудникам при сработке?", options: ["Никому, оставить как есть","Рассказать сотруднику напрямую","Карине Мустафиной","Кристине Филоновой"], correct: 2, hint: "Раздел «Персонал»." },
+    { q: "Кому писать по внешним подрядчикам (СТО, СБ, клининг) при сработке?", options: ["Карине Мустафиной","Кристине Филоновой","Никому","Напрямую в полицию"], correct: 1, hint: "Раздел «Персонал»." },
+    { q: "Можно ли самостоятельно озвучить сотруднику факт сработки по FR?", options: ["Да, если он ваш друг","Да, если он внутренний сотрудник","Нет, только после согласования с отделом LPS","Да, если он сам спросил"], correct: 2, hint: "Раздел «Персонал»." },
+    { q: "Что делать, если после теста-фото уведомление не пришло?", options: ["Обратиться к менеджеру","Перезагрузить сервер самостоятельно","Открыть заявку в ITSM","Написать в LPS"], correct: 0, hint: "Раздел «Проверка оборудования»." },
+    { q: "Какие статусы в правоохранительных органах бывают в уведомлении?", options: ["«Активен» и «Неактивен»","«Контроль» (не передан) и «В поиске» (передан)","«Открыт» и «Закрыт»","«Новый» и «Старый»"], correct: 1, hint: "Раздел «Чат с уведомлениями»." },
+    { q: "В течение какого времени сотрудник должен поставить реакцию после сработки?", options: ["30 секунд","60 секунд","2 минуты","5 минут"], correct: 1, hint: "Раздел «Алгоритм работы»." },
+    { q: "Что нужно учитывать при составлении расписания и планировании брейков для контроля FR?", options: ["Количество клиентов в зале","На смене всегда должен быть сотрудник с чатом","Загрузку касс","Пожелания сотрудников"], correct: 1, hint: "Раздел «Алгоритм работы»." }
   ]
 };
 
@@ -299,17 +281,8 @@ const PASS_PERCENT = 80;
 
 /* ==================== СОСТОЯНИЕ ==================== */
 let state = {
-  shopId: null,
-  tabNumber: null,
-  level: null,
-  current: 0,
-  score: 0,
-  answered: false,
-  selectedMulti: [],
-  wrongHints: [],
-  sessionQuestions: [],
-  viewShopId: null,
-  isAdmin: false
+  shopId: null, tabNumber: null, level: null, current: 0, score: 0,
+  answered: false, selectedMulti: [], wrongHints: [], sessionQuestions: [], viewShopId: null
 };
 
 /* ==================== API И ХРАНИЛИЩЕ (Netlify) ==================== */
@@ -327,20 +300,10 @@ async function fetchAllResults() {
 }
 
 async function recordAttempt(shopId, tab, level, score, total) {
-  const newRecord = {
-    shopId,
-    tabNumber: tab,
-    level,
-    score,
-    total,
-    date: new Date().toISOString()
-  };
-
+  const newRecord = { shopId, tabNumber: tab, level, score, total, date: new Date().toISOString() };
   try {
     await fetch('/.netlify/functions/save-result', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newRecord)
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newRecord)
     });
     allResultsData.push(newRecord);
   } catch (error) {
@@ -357,24 +320,14 @@ function getAllShops() {
 function getShopData(shopId) {
   const shopResults = allResultsData.filter(r => r.shopId === shopId);
   const employees = {};
-  
   shopResults.forEach(r => {
-    if (!employees[r.tabNumber]) {
-      employees[r.tabNumber] = { level: 'intern', attempts: 0, history: [] };
-    }
-    employees[r.tabNumber].history.push({
-      level: r.level,
-      score: r.score,
-      total: r.total,
-      date: r.date
-    });
+    if (!employees[r.tabNumber]) employees[r.tabNumber] = { level: 'intern', attempts: 0, history: [] };
+    employees[r.tabNumber].history.push({ level: r.level, score: r.score, total: r.total, date: r.date });
   });
-
   Object.keys(employees).forEach(tab => {
     const emp = employees[tab];
     emp.history.sort((a, b) => new Date(a.date) - new Date(b.date));
     emp.attempts = emp.history.length;
-    
     let currentLevel = 'intern';
     emp.history.forEach(h => {
       const percent = (h.score / h.total) * 100;
@@ -386,7 +339,6 @@ function getShopData(shopId) {
     });
     emp.level = currentLevel;
   });
-
   return { employees };
 }
 
@@ -395,80 +347,27 @@ function getEmployee(shopId, tab) {
   return shop.employees[tab] || null;
 }
 
-async function deleteEmployee(shopId, tab) {
-  // 1. Спрашиваем пароль
-  const password = prompt("Введите пароль администратора для удаления:");
-  if (password === null) return; // Пользователь нажал "Отмена"
-
-  if (password !== 'admin') {
-    alert("Неверный пароль!");
-    return;
-  }
-
-  if (!confirm(`Удалить ВСЕ результаты сотрудника ${tab}? Это действие необратимо.`)) return;
-
-  // 2. Отправляем запрос на сервер
-  try {
-    const response = await fetch('/.netlify/functions/delete-result', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ shopId, tabNumber: tab })
-    });
-
-    if (!response.ok) throw new Error('Ошибка сервера');
-
-    // 3. Обновляем данные на странице без перезагрузки
-    await fetchAllResults(); // Заново скачиваем данные с сервера
-    renderResultsView();     // Перерисовываем таблицу
-    alert("Запись успешно удалена.");
-  } catch (error) {
-    console.error(error);
-    alert("Не удалось удалить запись. Попробуйте позже.");
-  }
-}
-function deleteShop() { alert("Удаление временно недоступно."); }
-
 /* ==================== УТИЛИТЫ ==================== */
 function levelName(l) { return LEVEL_NAMES[l] || l; }
 function levelIcon(l) { return LEVEL_ICONS[l] || ''; }
 function levelBadge(l) { return LEVEL_BADGE[l] || ''; }
 function levelColor(l) { return LEVEL_COLOR[l] || '#38bdf8'; }
-function formatDate(iso) {
-  const d = new Date(iso);
-  return d.toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
-}
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+function formatDate(iso) { return new Date(iso).toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }); }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function shuffle(arr) {
   const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
 
-function getQuestionsForLevel(level) {
-  if (level === 'intern') return QUESTIONS.junior;
-  return QUESTIONS[level] || [];
-}
+function getQuestionsForLevel(level) { return level === 'intern' ? QUESTIONS.junior : QUESTIONS[level] || []; }
 
 function prepareSession(level) {
   const raw = getQuestionsForLevel(level);
-  const shuffledQuestions = shuffle(raw);
-  return shuffledQuestions.map(q => {
-    const correctTexts = q.multiCorrect
-      ? q.multiCorrect.map(i => q.options[i])
-      : [q.options[q.correct]];
+  return shuffle(raw).map(q => {
+    const correctTexts = q.multiCorrect ? q.multiCorrect.map(i => q.options[i]) : [q.options[q.correct]];
     const shuffledOptions = shuffle(q.options.map(text => ({ text, isCorrect: correctTexts.includes(text) })));
-    return {
-      q: q.q,
-      hint: q.hint,
-      isMulti: !!q.multiCorrect,
-      options: shuffledOptions,
-      correctCount: correctTexts.length
-    };
+    return { q: q.q, hint: q.hint, isMulti: !!q.multiCorrect, options: shuffledOptions, correctCount: correctTexts.length };
   });
 }
 
@@ -477,45 +376,25 @@ const app = document.getElementById('app');
 
 function renderStart() {
   const shops = getAllShops();
-  const hasShops = shops.length > 0;
-
   app.innerHTML = `
     ${BRAND_BLOCK}
     <p class="subtitle">Проверка знаний по системе распознавания лиц</p>
-    <div class="field">
-      <label>Номер магазина</label>
-      <input type="text" id="shopInput" placeholder="Например: 1234" autocomplete="off" inputmode="numeric">
-    </div>
-    <div class="field">
-      <label>Табельный номер</label>
-      <input type="text" id="tabInput" placeholder="Например: 001" autocomplete="off" inputmode="numeric">
-    </div>
+    <div class="field"><label>Номер магазина</label><input type="text" id="shopInput" placeholder="Например: 1234" inputmode="numeric"></div>
+    <div class="field"><label>Табельный номер</label><input type="text" id="tabInput" placeholder="Например: 001" inputmode="numeric"></div>
     <button class="btn" id="startBtn">Начать тестирование →</button>
-    ${hasShops ? `
-      <div class="top-actions">
-        <button class="btn secondary" id="viewResultsBtn">📊 Все результаты магазинов (${shops.length})</button>
-      </div>
-    ` : ''}
+    ${shops.length > 0 ? `<div class="top-actions"><button class="btn secondary" id="viewResultsBtn">📊 Все результаты магазинов (${shops.length})</button></div>` : ''}
   `;
 
-  const shopInput = document.getElementById('shopInput');
-  const tabInput = document.getElementById('tabInput');
-
   document.getElementById('startBtn').onclick = () => {
-    const shop = shopInput.value.trim();
-    const tab = tabInput.value.trim();
-    if (!shop) { alert('Введите номер магазина'); shopInput.focus(); return; }
-    if (!tab) { alert('Введите табельный номер'); tabInput.focus(); return; }
-    state.shopId = shop;
-    state.tabNumber = tab;
-    renderLevels();
+    const shop = document.getElementById('shopInput').value.trim();
+    const tab = document.getElementById('tabInput').value.trim();
+    if (!shop) { alert('Введите номер магазина'); return; }
+    if (!tab) { alert('Введите табельный номер'); return; }
+    state.shopId = shop; state.tabNumber = tab; renderLevels();
   };
 
-  if (hasShops) {
-    document.getElementById('viewResultsBtn').onclick = () => {
-      state.viewShopId = shops[0];
-      renderResultsView();
-    };
+  if (shops.length > 0) {
+    document.getElementById('viewResultsBtn').onclick = () => { state.viewShopId = shops[0]; renderResultsView(); };
   }
 }
 
@@ -543,96 +422,49 @@ function renderLevels() {
     if (lvl === targetLevel && nextLevelName) hint = `<span class="level-hint promote">→ Пройдите на ${PASS_PERCENT}%+, чтобы стать ${nextLevelName}</span>`;
     else if (isCurrent && currentLevel === 'senior') hint = `<span class="level-hint repeat">Максимальный уровень</span>`;
     else if (isCurrent) hint = `<span class="level-hint repeat">Текущий уровень</span>`;
-
     return `
       <div class="level-card" data-level="${lvl}" style="--accent-color:${levelColor(lvl)}">
-        <div class="info">
-          <h3>${levelIcon(lvl)} ${levelName(lvl)} ${isCurrent ? '<span style="font-size:0.7rem;color:#38bdf8;font-weight:600;">— текущий</span>' : ''}</h3>
-          <p>${levelDescriptions[lvl]}</p>
-          ${hint}
-        </div>
+        <div class="info"><h3>${levelIcon(lvl)} ${levelName(lvl)} ${isCurrent ? '<span style="font-size:0.7rem;color:#38bdf8;font-weight:600;">— текущий</span>' : ''}</h3><p>${levelDescriptions[lvl]}</p>${hint}</div>
         <span class="level-badge ${levelBadge(lvl)}">${qCount} вопр.</span>
-      </div>
-    `;
+      </div>`;
   }).join('');
 
   const history = emp ? emp.history : [];
   const historyHtml = history.length > 0 ? `
     <div class="table-wrap">
       <h4>История прохождений <span class="count">${history.length}</span></h4>
-      <table>
-        <thead><tr><th>Уровень</th><th>Результат</th><th>Дата</th></tr></thead>
-        <tbody>
-          ${history.slice().reverse().map(h => `
-            <tr>
-              <td>${levelIcon(h.level)} ${levelName(h.level)}</td>
-              <td class="score-cell">${h.score}/${h.total}</td>
-              <td>${formatDate(h.date)}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </div>
-  ` : '';
+      <table><thead><tr><th>Уровень</th><th>Результат</th><th>Дата</th></tr></thead><tbody>
+        ${history.slice().reverse().map(h => `<tr><td>${levelIcon(h.level)} ${levelName(h.level)}</td><td class="score-cell">${h.score}/${h.total}</td><td>${formatDate(h.date)}</td></tr>`).join('')}
+      </tbody></table>
+    </div>` : '';
 
-  let subtitleText;
-  if (currentLevel === 'intern') subtitleText = `Пройдите <b style="color:${levelColor('intern')}">Intern</b> на ${PASS_PERCENT}%+, чтобы стать <b style="color:${levelColor('junior')}">Junior</b>`;
-  else if (currentLevel === 'junior') subtitleText = `Пройдите <b style="color:${levelColor('middle')}">Middle</b> на ${PASS_PERCENT}%+, чтобы стать <b style="color:${levelColor('senior')}">Senior</b>`;
-  else if (currentLevel === 'middle') subtitleText = `Пройдите <b style="color:${levelColor('middle')}">Middle</b> на ${PASS_PERCENT}%+, чтобы стать <b style="color:${levelColor('senior')}">Senior</b>`;
-  else subtitleText = `Вы на максимальном уровне — <b style="color:${levelColor('senior')}">Senior</b>`;
+  let subtitleText = currentLevel === 'intern' ? `Пройдите <b style="color:${levelColor('intern')}">Intern</b> на ${PASS_PERCENT}%+, чтобы стать <b style="color:${levelColor('junior')}">Junior</b>` : currentLevel === 'senior' ? `Вы на максимальном уровне — <b style="color:${levelColor('senior')}">Senior</b>` : `Пройдите <b style="color:${levelColor('middle')}">Middle</b> на ${PASS_PERCENT}%+, чтобы стать <b style="color:${levelColor('senior')}">Senior</b>`;
 
   app.innerHTML = `
     ${BRAND_BLOCK}
-    <div class="shop-info" style="margin-top:20px;">
-      Магазин: <b>${escapeHtml(state.shopId)}</b> ·
-      Табельный: <span class="tab">${escapeHtml(state.tabNumber)}</span> ·
-      Уровень: <b style="color:${levelColor(currentLevel)}">${levelIcon(currentLevel)} ${levelName(currentLevel)}</b>
-    </div>
+    <div class="shop-info" style="margin-top:20px;">Магазин: <b>${escapeHtml(state.shopId)}</b> · Табельный: <span class="tab">${escapeHtml(state.tabNumber)}</span> · Уровень: <b style="color:${levelColor(currentLevel)}">${levelIcon(currentLevel)} ${levelName(currentLevel)}</b></div>
     <div class="page-title">${currentLevel === 'senior' ? 'Senior' : 'Выбор уровня'}</div>
     <p class="subtitle">${subtitleText}</p>
     <div class="levels">${levelsHtml}</div>
     ${historyHtml}
-    <div class="btn-row" style="margin-top:20px;">
-      <button class="btn secondary" id="backBtn">← Сменить сотрудника</button>
-      <button class="btn secondary" id="viewResultsBtn">📊 Все результаты</button>
-    </div>
+    <div class="btn-row" style="margin-top:20px;"><button class="btn secondary" id="backBtn">← Сменить сотрудника</button><button class="btn secondary" id="viewResultsBtn">📊 Все результаты</button></div>
   `;
 
   document.querySelectorAll('.level-card').forEach(card => {
     card.onclick = () => {
-      state.level = card.dataset.level;
-      state.current = 0; state.score = 0; state.answered = false;
-      state.selectedMulti = []; state.wrongHints = [];
-      state.sessionQuestions = prepareSession(state.level);
-      renderQuestion();
+      state.level = card.dataset.level; state.current = 0; state.score = 0; state.answered = false; state.selectedMulti = []; state.wrongHints = [];
+      state.sessionQuestions = prepareSession(state.level); renderQuestion();
     };
   });
-
-  document.getElementById('backBtn').onclick = () => {
-    state.shopId = null; state.tabNumber = null; state.sessionQuestions = [];
-    renderStart();
-  };
-
-  document.getElementById('viewResultsBtn').onclick = () => {
-    state.viewShopId = state.shopId;
-    renderResultsView();
-  };
+  document.getElementById('backBtn').onclick = () => { state.shopId = null; state.tabNumber = null; state.sessionQuestions = []; renderStart(); };
+  document.getElementById('viewResultsBtn').onclick = () => { state.viewShopId = state.shopId; renderResultsView(); };
 }
 
 function renderResultsView() {
   const shops = getAllShops();
   if (shops.length === 0) {
-    app.innerHTML = `
-      ${BRAND_BLOCK}
-      <div class="page-title" style="margin-top:20px;">Результаты</div>
-      <div class="empty-state">
-        <div class="icon">📭</div>
-        <p>Пока нет ни одного прохождения</p>
-      </div>
-      <button class="btn secondary" id="backBtn" style="margin-top:20px;">← На главную</button>
-    `;
-    document.getElementById('backBtn').onclick = renderStart;
-    return;
+    app.innerHTML = `${BRAND_BLOCK}<div class="page-title" style="margin-top:20px;">Результаты</div><div class="empty-state"><div class="icon">📭</div><p>Пока нет ни одного прохождения</p></div><button class="btn secondary" id="backBtn" style="margin-top:20px;">← На главную</button>`;
+    document.getElementById('backBtn').onclick = renderStart; return;
   }
 
   const activeShop = state.viewShopId && shops.includes(state.viewShopId) ? state.viewShopId : shops[0];
@@ -640,108 +472,67 @@ function renderResultsView() {
   const employees = Object.entries(shop.employees || {});
 
   employees.sort((a, b) => {
-    const lvlA = LEVEL_ORDER.indexOf(a[1].level);
-    const lvlB = LEVEL_ORDER.indexOf(b[1].level);
+    const lvlA = LEVEL_ORDER.indexOf(a[1].level); const lvlB = LEVEL_ORDER.indexOf(b[1].level);
     if (lvlA !== lvlB) return lvlB - lvlA;
-    const bestA = Math.max(...a[1].history.map(h => h.score / h.total), 0);
-    const bestB = Math.max(...b[1].history.map(h => h.score / h.total), 0);
-    return bestB - bestA;
+    return Math.max(...b[1].history.map(h => h.score / h.total), 0) - Math.max(...a[1].history.map(h => h.score / h.total), 0);
   });
 
   const totalEmployees = employees.length;
   const totalAttempts = employees.reduce((s, [, d]) => s + d.attempts, 0);
   const promoted = employees.filter(([, d]) => d.level !== 'intern').length;
 
-  const shopTabsHtml = `
-    <div class="shop-tabs" id="shopTabs">
-      ${shops.map(s => {
-        const shopData = getShopData(s);
-        const empCount = Object.keys(shopData.employees || {}).length;
-        return `
-          <button class="shop-tab ${s === activeShop ? 'active' : ''}" data-shop="${escapeHtml(s)}">
-            Магазин ${escapeHtml(s)} <span class="tab-count">${empCount}</span>
-          </button>
-        `;
-      }).join('')}
-    </div>
-  `;
+  const shopTabsHtml = `<div class="shop-tabs" id="shopTabs">${shops.map(s => {
+    const empCount = Object.keys(getShopData(s).employees || {}).length;
+    return `<button class="shop-tab ${s === activeShop ? 'active' : ''}" data-shop="${escapeHtml(s)}">Магазин ${escapeHtml(s)} <span class="tab-count">${empCount}</span></button>`;
+  }).join('')}</div>`;
 
-  const tableHtml = employees.length === 0 ? `
-    <div class="empty-state">
-      <div class="icon">👥</div>
-      <p>В этом магазине пока никто не проходил тест</p>
-    </div>
-  ` : `
-    <table>
-      <thead>
-        <tr><th>#</th><th>Табельный</th><th>Уровень</th><th>Попыток</th><th>Лучший</th><th>Последняя</th><th></th></tr>
-      </thead>
-      <tbody>
-        ${employees.map(([tab, data], i) => {
-          const best = data.history.length > 0
-            ? data.history.reduce((acc, h) => (h.score / h.total) > acc.p ? { p: h.score / h.total, h } : acc, { p: -1, h: null }).h
-            : null;
-          const last = data.history.length > 0 ? data.history[data.history.length - 1] : null;
-          return `
-            <tr>
-              <td style="color:#64748b;">${i + 1}</td>
-              <td><b style="color:var(--text-0);">${escapeHtml(tab)}</b></td>
-              <td><span class="lvl-pill ${levelBadge(data.level)}">${levelIcon(data.level)} ${levelName(data.level)}</span></td>
-              <td>${data.attempts}</td>
-              <td class="score-cell">${best ? `${best.score}/${best.total}` : '—'}</td>
-              <td style="color:#94a3b8;font-size:0.76rem;">${last ? `${levelIcon(last.level)} ${last.score}/${last.total} · ${formatDate(last.date)}` : '—'}</td>
-              <td>
-                <button class="btn danger small" data-del-tab="${escapeHtml(tab)}" title="Удалить запись">✕</button>
-              </td>
-            </tr>
-          `;
-        }).join('')}
-      </tbody>
-    </table>
-  `;
+  const tableHtml = employees.length === 0 ? `<div class="empty-state"><div class="icon">👥</div><p>В этом магазине пока никто не проходил тест</p></div>` : `
+    <table><thead><tr><th>#</th><th>Табельный</th><th>Уровень</th><th>Попыток</th><th>Лучший</th><th>Последняя</th><th></th></tr></thead><tbody>
+      ${employees.map(([tab, data], i) => {
+        const best = data.history.length > 0 ? data.history.reduce((acc, h) => (h.score / h.total) > acc.p ? { p: h.score / h.total, h } : acc, { p: -1, h: null }).h : null;
+        const last = data.history.length > 0 ? data.history[data.history.length - 1] : null;
+        return `<tr><td style="color:#64748b;">${i + 1}</td><td><b style="color:var(--text-0);">${escapeHtml(tab)}</b></td><td><span class="lvl-pill ${levelBadge(data.level)}">${levelIcon(data.level)} ${levelName(data.level)}</span></td><td>${data.attempts}</td><td class="score-cell">${best ? `${best.score}/${best.total}` : '—'}</td><td style="color:#94a3b8;font-size:0.76rem;">${last ? `${levelIcon(last.level)} ${last.score}/${last.total} · ${formatDate(last.date)}` : '—'}</td><td><button class="btn danger small" data-del-tab="${escapeHtml(tab)}" title="Удалить запись">✕</button></td></tr>`;
+      }).join('')}
+    </tbody></table>`;
 
   app.innerHTML = `
     ${BRAND_BLOCK}
     <div class="page-title" style="margin-top:20px;">Результаты магазинов</div>
     <p class="subtitle">Все прохождения по табельным номерам</p>
-
     <div class="stats" style="margin-bottom:20px;">
       <div class="stat"><div class="val">${totalEmployees}</div><div class="lbl">Сотрудников</div></div>
       <div class="stat"><div class="val">${totalAttempts}</div><div class="lbl">Всего попыток</div></div>
       <div class="stat"><div class="val">${promoted}</div><div class="lbl">Повышенных</div></div>
     </div>
-
-    <div class="table-wrap">
-      <h4>
-        <span>Результаты <span class="count">· ${employees.length} сотр.</span></span>
-      </h4>
-      ${shopTabsHtml}
-      ${tableHtml}
-    </div>
-
-    <div class="btn-row" style="margin-top:20px;">
-      <button class="btn secondary" id="backBtn">← На главную</button>
-    </div>
+    <div class="table-wrap"><h4><span>Результаты <span class="count">· ${employees.length} сотр.</span></span></h4>${shopTabsHtml}${tableHtml}</div>
+    <div class="btn-row" style="margin-top:20px;"><button class="btn secondary" id="backBtn">← На главную</button></div>
   `;
 
-  document.querySelectorAll('.shop-tab').forEach(tab => {
-    tab.onclick = () => {
-      state.viewShopId = tab.dataset.shop;
-      renderResultsView();
-    };
-  });
+  document.querySelectorAll('.shop-tab').forEach(tab => { tab.onclick = () => { state.viewShopId = tab.dataset.shop; renderResultsView(); }; });
+  document.getElementById('backBtn').onclick = () => { state.viewShopId = null; renderStart(); };
 
-  document.getElementById('backBtn').onclick = () => {
-    state.viewShopId = null;
-    renderStart();
-  };
-
+  /* Обработчик удаления */
   document.querySelectorAll('[data-del-tab]').forEach(btn => {
-    btn.onclick = () => {
+    btn.onclick = async () => {
       const tab = btn.dataset.delTab;
-      deleteEmployee(activeShop, tab);
+      const password = prompt("Введите пароль администратора для удаления:");
+      if (password === null) return; 
+      if (password !== 'admin') { alert("Неверный пароль!"); return; }
+      if (!confirm(`Удалить ВСЕ результаты сотрудника ${tab}?`)) return;
+      try {
+        const response = await fetch('/.netlify/functions/delete-result', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ shopId: activeShop, tabNumber: tab })
+        });
+        if (!response.ok) throw new Error('Сервер не ответил');
+        await fetchAllResults();
+        renderResultsView();
+        alert("Запись удалена.");
+      } catch (error) {
+        console.error(error); alert("Ошибка удаления. Возможно, функция на сервере не настроена.");
+      }
     };
   });
+}
 
 function renderQuestion() {
   const q = state.sessionQuestions[state.current];
@@ -750,26 +541,12 @@ function renderQuestion() {
   const isMulti = q.isMulti;
 
   app.innerHTML = `
-    <div class="shop-info">
-      Магазин: <b>${escapeHtml(state.shopId)}</b> ·
-      Табельный: <span class="tab">${escapeHtml(state.tabNumber)}</span> ·
-      Уровень: <b style="color:${levelColor(state.level)}">${levelIcon(state.level)} ${levelName(state.level)}</b>
-    </div>
+    <div class="shop-info">Магазин: <b>${escapeHtml(state.shopId)}</b> · Табельный: <span class="tab">${escapeHtml(state.tabNumber)}</span> · Уровень: <b style="color:${levelColor(state.level)}">${levelIcon(state.level)} ${levelName(state.level)}</b></div>
     <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-    <div class="q-meta" style="margin-top:16px;">
-      <span>Вопрос ${state.current + 1} / ${total}</span>
-      <span>Счёт: ${state.score}</span>
-    </div>
+    <div class="q-meta" style="margin-top:16px;"><span>Вопрос ${state.current + 1} / ${total}</span><span>Счёт: ${state.score}</span></div>
     <div class="question">${escapeHtml(q.q)}</div>
     ${isMulti ? '<p style="color:#94a3b8;font-size:0.82rem;margin-bottom:14px;">Выберите один или несколько вариантов, затем нажмите «Ответить»</p>' : ''}
-    <div class="options" id="options">
-      ${q.options.map((opt, i) => `
-        <button class="option" data-idx="${i}">
-          <span class="letter">${String.fromCharCode(65 + i)}</span>
-          <span>${escapeHtml(opt.text)}</span>
-        </button>
-      `).join('')}
-    </div>
+    <div class="options" id="options">${q.options.map((opt, i) => `<button class="option" data-idx="${i}"><span class="letter">${String.fromCharCode(65 + i)}</span><span>${escapeHtml(opt.text)}</span></button>`).join('')}</div>
     <div class="feedback" id="feedback"></div>
     ${isMulti ? `<button class="btn" id="submitMulti" style="margin-top:16px;">Ответить</button>` : ''}
   `;
@@ -781,23 +558,15 @@ function renderQuestion() {
       el.onclick = () => {
         if (state.answered) return;
         const idx = parseInt(el.dataset.idx);
-        if (state.selectedMulti.includes(idx)) {
-          state.selectedMulti = state.selectedMulti.filter(x => x !== idx);
-          el.classList.remove('selected');
-        } else {
-          state.selectedMulti.push(idx);
-          el.classList.add('selected');
-        }
+        if (state.selectedMulti.includes(idx)) { state.selectedMulti = state.selectedMulti.filter(x => x !== idx); el.classList.remove('selected'); }
+        else { state.selectedMulti.push(idx); el.classList.add('selected'); }
       };
     });
-
     document.getElementById('submitMulti').onclick = () => {
       if (state.answered) return;
       if (state.selectedMulti.length === 0) { alert('Выберите хотя бы один вариант'); return; }
       const correctIdxs = q.options.map((o, i) => o.isCorrect ? i : -1).filter(i => i >= 0);
-      const correctSet = correctIdxs.slice().sort().join(',');
-      const selectedSet = state.selectedMulti.slice().sort().join(',');
-      const isCorrect = correctSet === selectedSet;
+      const isCorrect = correctIdxs.slice().sort().join(',') === state.selectedMulti.slice().sort().join(',');
       finishQuestion(isCorrect, q, null, correctIdxs);
     };
   } else {
@@ -819,16 +588,12 @@ function finishQuestion(isCorrect, q, clickedEl, correctIdxs) {
   const feedback = document.getElementById('feedback');
 
   if (isCorrect) {
-    state.score++;
-    if (clickedEl) clickedEl.classList.add('correct');
+    state.score++; if (clickedEl) clickedEl.classList.add('correct');
     if (feedback) { feedback.className = 'feedback ok show'; feedback.textContent = '✓ Верно'; }
   } else {
     state.wrongHints.push({ question: q.q, hint: q.hint });
     if (clickedEl) clickedEl.classList.add('wrong');
-    if (feedback) {
-      feedback.className = 'feedback bad show';
-      feedback.innerHTML = `✗ Неверно<span class="hint">Правильный ответ не показан — повторите материал.</span>`;
-    }
+    if (feedback) { feedback.className = 'feedback bad show'; feedback.innerHTML = `✗ Неверно<span class="hint">Правильный ответ не показан — повторите материал.</span>`; }
   }
 
   if (q.isMulti) {
@@ -838,18 +603,14 @@ function finishQuestion(isCorrect, q, clickedEl, correctIdxs) {
       else if (!isCorrect && state.selectedMulti.includes(idx)) el.classList.add('wrong');
     });
   }
-
   optionEls.forEach(o => o.classList.add('disabled'));
   const submitBtn = document.getElementById('submitMulti');
   if (submitBtn) submitBtn.classList.add('hidden');
-
   setTimeout(nextQuestion, 1500);
 }
 
 function nextQuestion() {
-  state.current++;
-  state.answered = false;
-  state.selectedMulti = [];
+  state.current++; state.answered = false; state.selectedMulti = [];
   if (state.current >= state.sessionQuestions.length) renderResult();
   else renderQuestion();
 }
@@ -862,9 +623,7 @@ async function renderResult() {
 
   const oldEmp = getEmployee(state.shopId, state.tabNumber);
   const oldLevel = oldEmp ? oldEmp.level : 'intern';
-  
   await recordAttempt(state.shopId, state.tabNumber, state.level, score, total);
-  
   const updatedEmp = getEmployee(state.shopId, state.tabNumber);
   const newLevel = updatedEmp.level;
   const promoted = LEVEL_ORDER.indexOf(newLevel) > LEVEL_ORDER.indexOf(oldLevel);
@@ -879,28 +638,14 @@ async function renderResult() {
   const currentIdx = LEVEL_ORDER.indexOf(oldLevel);
   const passedIdx = LEVEL_ORDER.indexOf(state.level);
   const isOwnLevel = passedIdx === currentIdx;
-
-  let nextLevelName = null;
-  if (oldLevel === 'intern') nextLevelName = 'Junior';
-  else if (oldLevel === 'junior') nextLevelName = 'Senior';
-  else if (oldLevel === 'middle') nextLevelName = 'Senior';
+  let nextLevelName = oldLevel === 'intern' ? 'Junior' : oldLevel === 'junior' || oldLevel === 'middle' ? 'Senior' : null;
 
   let promotionHtml = '';
-  if (promoted) {
-    promotionHtml = `<div class="promotion">🎉 Вы повышены до уровня <b>${levelIcon(newLevel)} ${levelName(newLevel)}</b></div>`;
-  } else if (!passed && isOwnLevel && nextLevelName) {
-    const need = Math.ceil(total * PASS_PERCENT / 100);
-    promotionHtml = `<div class="warn-box">Для повышения до <b>${nextLevelName}</b> нужно набрать <b>${need} из ${total}</b> (${PASS_PERCENT}%)</div>`;
-  } else if (!isOwnLevel && !promoted) {
-    promotionHtml = `<div class="info-box">ℹ️ Для повышения нужно сдать уровень <b>${levelName(oldLevel)}</b> на ${PASS_PERCENT}%+</div>`;
-  }
+  if (promoted) promotionHtml = `<div class="promotion">🎉 Вы повышены до уровня <b>${levelIcon(newLevel)} ${levelName(newLevel)}</b></div>`;
+  else if (!passed && isOwnLevel && nextLevelName) promotionHtml = `<div class="warn-box">Для повышения до <b>${nextLevelName}</b> нужно набрать <b>${Math.ceil(total * PASS_PERCENT / 100)} из ${total}</b> (${PASS_PERCENT}%)</div>`;
+  else if (!isOwnLevel && !promoted) promotionHtml = `<div class="info-box">ℹ️ Для повышения нужно сдать уровень <b>${levelName(oldLevel)}</b> на ${PASS_PERCENT}%+</div>`;
 
-  const recommendationsHtml = state.wrongHints.length > 0 ? `
-    <div class="recommendations">
-      <h3>Что повторить</h3>
-      <ul>${state.wrongHints.map(w => `<li><b>${escapeHtml(w.question)}</b>${escapeHtml(w.hint)}</li>`).join('')}</ul>
-    </div>
-  ` : '';
+  const recommendationsHtml = state.wrongHints.length > 0 ? `<div class="recommendations"><h3>Что повторить</h3><ul>${state.wrongHints.map(w => `<li><b>${escapeHtml(w.question)}</b>${escapeHtml(w.hint)}</li>`).join('')}</ul></div>` : '';
 
   app.innerHTML = `
     ${BRAND_BLOCK}
@@ -911,85 +656,38 @@ async function renderResult() {
       <p>${percent}% правильных ответов · Уровень: ${levelIcon(state.level)} ${levelName(state.level)}</p>
       <p style="color:#cbd5e1;max-width:520px;margin:0 auto 20px;">${message}</p>
       ${promotionHtml}
-      <div class="stats">
-        <div class="stat"><div class="val">${score}</div><div class="lbl">Верно</div></div>
-        <div class="stat"><div class="val">${total - score}</div><div class="lbl">Ошибок</div></div>
-        <div class="stat"><div class="val">${percent}%</div><div class="lbl">Результат</div></div>
-      </div>
+      <div class="stats"><div class="stat"><div class="val">${score}</div><div class="lbl">Верно</div></div><div class="stat"><div class="val">${total - score}</div><div class="lbl">Ошибок</div></div><div class="stat"><div class="val">${percent}%</div><div class="lbl">Результат</div></div></div>
       ${recommendationsHtml}
       <button class="btn" id="retryBtn">Пройти ещё раз</button>
-      <div class="btn-row">
-        <button class="btn secondary" id="levelsBtn">К выбору уровня</button>
-        <button class="btn secondary" id="viewResultsBtn">📊 Все результаты</button>
-      </div>
+      <div class="btn-row"><button class="btn secondary" id="levelsBtn">К выбору уровня</button><button class="btn secondary" id="viewResultsBtn">📊 Все результаты</button></div>
       <button class="btn secondary" id="shopBtn" style="margin-top:12px;">Сменить сотрудника</button>
     </div>
     ${renderShopTable()}
   `;
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  document.getElementById('retryBtn').onclick = () => {
-    state.current = 0; state.score = 0; state.answered = false;
-    state.selectedMulti = []; state.wrongHints = [];
-    state.sessionQuestions = prepareSession(state.level);
-    renderQuestion();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  document.getElementById('levelsBtn').onclick = () => {
-    renderLevels();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  document.getElementById('viewResultsBtn').onclick = () => {
-    state.viewShopId = state.shopId;
-    renderResultsView();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  document.getElementById('shopBtn').onclick = () => {
-    state.shopId = null; state.tabNumber = null; state.sessionQuestions = [];
-    renderStart();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  document.getElementById('retryBtn').onclick = () => { state.current = 0; state.score = 0; state.answered = false; state.selectedMulti = []; state.wrongHints = []; state.sessionQuestions = prepareSession(state.level); renderQuestion(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  document.getElementById('levelsBtn').onclick = () => { renderLevels(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  document.getElementById('viewResultsBtn').onclick = () => { state.viewShopId = state.shopId; renderResultsView(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  document.getElementById('shopBtn').onclick = () => { state.shopId = null; state.tabNumber = null; state.sessionQuestions = []; renderStart(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
 }
 
 function renderShopTable() {
   const shop = getShopData(state.shopId);
   const employees = Object.entries(shop.employees || {});
   if (employees.length === 0) return '';
-
-  employees.sort((a, b) => {
-    const lvlA = LEVEL_ORDER.indexOf(a[1].level);
-    const lvlB = LEVEL_ORDER.indexOf(b[1].level);
-    if (lvlA !== lvlB) return lvlB - lvlA;
-    const bestA = Math.max(...a[1].history.map(h => h.score / h.total), 0);
-    const bestB = Math.max(...b[1].history.map(h => h.score / h.total), 0);
-    return bestB - bestA;
-  });
-
+  employees.sort((a, b) => { const lvlA = LEVEL_ORDER.indexOf(a[1].level); const lvlB = LEVEL_ORDER.indexOf(b[1].level); if (lvlA !== lvlB) return lvlB - lvlA; return Math.max(...b[1].history.map(h => h.score / h.total), 0) - Math.max(...a[1].history.map(h => h.score / h.total), 0); });
   return `
     <div class="table-wrap" style="margin-top:28px;">
       <h4>Таблица магазина ${escapeHtml(state.shopId)} <span class="count">· ${employees.length} сотр.</span></h4>
-      <table>
-        <thead><tr><th>Табельный</th><th>Уровень</th><th>Попыток</th><th>Лучший результат</th></tr></thead>
-        <tbody>
-          ${employees.map(([tab, data]) => {
-            const best = data.history.length > 0
-              ? data.history.reduce((acc, h) => { const p = h.score / h.total; return p > acc.p ? { p, h } : acc; }, { p: -1, h: null }).h
-              : null;
-            const isCurrent = tab === state.tabNumber;
-            return `
-              <tr style="${isCurrent ? 'background:rgba(56,189,248,0.05);' : ''}">
-                <td><b style="color:var(--text-0);">${escapeHtml(tab)}</b>${isCurrent ? ' <span style="color:#38bdf8;font-size:0.7rem;font-weight:600;">— вы</span>' : ''}</td>
-                <td><span class="lvl-pill ${levelBadge(data.level)}">${levelIcon(data.level)} ${levelName(data.level)}</span></td>
-                <td>${data.attempts}</td>
-                <td class="score-cell">${best ? `${best.score}/${best.total}` : '—'}</td>
-              </tr>
-            `;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
+      <table><thead><tr><th>Табельный</th><th>Уровень</th><th>Попыток</th><th>Лучший результат</th></tr></thead><tbody>
+        ${employees.map(([tab, data]) => {
+          const best = data.history.length > 0 ? data.history.reduce((acc, h) => { const p = h.score / h.total; return p > acc.p ? { p, h } : acc; }, { p: -1, h: null }).h : null;
+          const isCurrent = tab === state.tabNumber;
+          return `<tr style="${isCurrent ? 'background:rgba(56,189,248,0.05);' : ''}"><td><b style="color:var(--text-0);">${escapeHtml(tab)}</b>${isCurrent ? ' <span style="color:#38bdf8;font-size:0.7rem;font-weight:600;">— вы</span>' : ''}</td><td><span class="lvl-pill ${levelBadge(data.level)}">${levelIcon(data.level)} ${levelName(data.level)}</span></td><td>${data.attempts}</td><td class="score-cell">${best ? `${best.score}/${best.total}` : '—'}</td></tr>`;
+        }).join('')}
+      </tbody></table>
+    </div>`;
 }
 
 /* ==================== СТАРТ ==================== */
