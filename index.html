@@ -395,7 +395,37 @@ function getEmployee(shopId, tab) {
   return shop.employees[tab] || null;
 }
 
-function deleteEmployee() { alert("Удаление временно недоступно."); }
+async function deleteEmployee(shopId, tab) {
+  // 1. Спрашиваем пароль
+  const password = prompt("Введите пароль администратора для удаления:");
+  if (password === null) return; // Пользователь нажал "Отмена"
+
+  if (password !== 'admin') {
+    alert("Неверный пароль!");
+    return;
+  }
+
+  if (!confirm(`Удалить ВСЕ результаты сотрудника ${tab}? Это действие необратимо.`)) return;
+
+  // 2. Отправляем запрос на сервер
+  try {
+    const response = await fetch('/.netlify/functions/delete-result', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ shopId, tabNumber: tab })
+    });
+
+    if (!response.ok) throw new Error('Ошибка сервера');
+
+    // 3. Обновляем данные на странице без перезагрузки
+    await fetchAllResults(); // Заново скачиваем данные с сервера
+    renderResultsView();     // Перерисовываем таблицу
+    alert("Запись успешно удалена.");
+  } catch (error) {
+    console.error(error);
+    alert("Не удалось удалить запись. Попробуйте позже.");
+  }
+}
 function deleteShop() { alert("Удаление временно недоступно."); }
 
 /* ==================== УТИЛИТЫ ==================== */
@@ -708,10 +738,10 @@ function renderResultsView() {
 
   document.querySelectorAll('[data-del-tab]').forEach(btn => {
     btn.onclick = () => {
-      alert('Удаление временно недоступно.');
+      const tab = btn.dataset.delTab;
+      deleteEmployee(activeShop, tab);
     };
   });
-}
 
 function renderQuestion() {
   const q = state.sessionQuestions[state.current];
