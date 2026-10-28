@@ -7,45 +7,24 @@
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif; }
   :root {
-    --bg-0: #0a0f1c;
-    --bg-1: #0f172a;
-    --bg-2: #1e293b;
-    --border: #24334a;
-    --border-hi: #2f4260;
-    --text-0: #f1f5f9;
-    --text-1: #cbd5e1;
-    --text-2: #94a3b8;
-    --text-3: #64748b;
-    --accent: #38bdf8;
-    --accent-glow: rgba(56,189,248,0.18);
-    --ok: #22c55e;
-    --warn: #eab308;
-    --err: #ef4444;
+    --bg-0: #0a0f1c; --bg-1: #0f172a; --bg-2: #1e293b;
+    --border: #24334a; --border-hi: #2f4260;
+    --text-0: #f1f5f9; --text-1: #cbd5e1; --text-2: #94a3b8; --text-3: #64748b;
+    --accent: #38bdf8; --accent-glow: rgba(56,189,248,0.18);
+    --ok: #22c55e; --warn: #eab308; --err: #ef4444;
   }
   html, body { overflow-x: hidden; max-width: 100%; }
   body {
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100vh; min-height: 100dvh;
     background: radial-gradient(ellipse 800px 600px at 50% -10%, rgba(56,189,248,0.10), transparent 70%), linear-gradient(180deg, var(--bg-0) 0%, #060a14 100%);
-    color:var(--text-0);
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    padding:32px 16px;
-    -webkit-font-smoothing:antialiased;
-    -webkit-tap-highlight-color: transparent;
+    color:var(--text-0); display:flex; align-items:flex-start; justify-content:center; padding:32px 16px;
+    -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color: transparent;
   }
   .container {
-    width:100%;
-    max-width:840px;
-    background:linear-gradient(180deg, rgba(15,23,42,0.96) 0%, rgba(10,15,28,0.96) 100%);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:44px 44px 40px;
+    width:100%; max-width:840px; background:linear-gradient(180deg, rgba(15,23,42,0.96) 0%, rgba(10,15,28,0.96) 100%);
+    border:1px solid var(--border); border-radius:20px; padding:44px 44px 40px;
     box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset, 0 1px 0 rgba(255,255,255,0.04) inset;
-    animation:fadeIn 0.4s ease;
-    position:relative;
-    overflow:hidden;
+    animation:fadeIn 0.4s ease; position:relative; overflow:hidden;
   }
   .container::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, var(--accent), transparent); opacity:0.6; }
   @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
@@ -71,6 +50,7 @@
   }
   input[type="text"]:focus, select:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
   input::placeholder { color:var(--text-3); }
+  select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
 
   .btn {
     display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:15px 20px;
@@ -181,6 +161,15 @@
   .shop-tab.active { background:rgba(56,189,248,0.1); border-color:var(--accent); color:var(--accent); }
   .shop-tab .tab-count { display:inline-block; margin-left:6px; padding:1px 6px; border-radius:10px; background:rgba(148,163,184,0.15); font-size:0.7rem; color:var(--text-3); }
   .shop-tab.active .tab-count { background:rgba(56,189,248,0.2); color:var(--accent); }
+
+  /* Стили для выпадающего списка */
+  .input-group { display: flex; gap: 8px; }
+  .input-group select { flex: 1; }
+  .input-group input { flex: 1; display: none; }
+  .input-group input.active { display: block; }
+  .input-group select.hidden { display: none; }
+  .toggle-input { background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--accent); padding: 0 16px; font-weight: 600; cursor: pointer; transition: 0.15s; font-family: inherit; }
+  .toggle-input:hover { background: rgba(56,189,248,0.08); border-color: var(--accent); }
 
   @media (max-width: 600px) {
     body { padding: 0; align-items: stretch; background: linear-gradient(180deg, var(--bg-0) 0%, #060a14 100%); }
@@ -314,7 +303,7 @@ async function recordAttempt(shopId, tab, level, score, total) {
 
 function getAllShops() {
   const shops = new Set(allResultsData.map(r => r.shopId));
-  return Array.from(shops).sort();
+  return Array.from(shops).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }
 
 function getShopData(shopId) {
@@ -376,21 +365,63 @@ const app = document.getElementById('app');
 
 function renderStart() {
   const shops = getAllShops();
+  
+  const shopsOptions = shops.map(s => `<option value="${escapeHtml(s)}">Магазин ${escapeHtml(s)}</option>`).join('');
+
   app.innerHTML = `
     ${BRAND_BLOCK}
     <p class="subtitle">Проверка знаний по системе распознавания лиц</p>
-    <div class="field"><label>Номер магазина</label><input type="text" id="shopInput" placeholder="Например: 1234" inputmode="numeric"></div>
-    <div class="field"><label>Табельный номер</label><input type="text" id="tabInput" placeholder="Например: 001" inputmode="numeric"></div>
+    
+    <div class="field">
+      <label>Номер магазина</label>
+      <div class="input-group">
+        ${shops.length > 0 ? `
+          <select id="shopSelect">
+            ${shopsOptions}
+            <option value="new">+ Новый магазин...</option>
+          </select>
+        ` : ''}
+        <input type="text" id="shopInput" placeholder="Например: 1234" inputmode="numeric" class="${shops.length === 0 ? 'active' : ''}">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Табельный номер</label>
+      <input type="text" id="tabInput" placeholder="Например: 001" inputmode="numeric">
+    </div>
+    
     <button class="btn" id="startBtn">Начать тестирование →</button>
     ${shops.length > 0 ? `<div class="top-actions"><button class="btn secondary" id="viewResultsBtn">📊 Все результаты магазинов (${shops.length})</button></div>` : ''}
   `;
 
+  const shopSelect = document.getElementById('shopSelect');
+  const shopInput = document.getElementById('shopInput');
+  const tabInput = document.getElementById('tabInput');
+
+  if (shopSelect) {
+    shopSelect.onchange = (e) => {
+      if (e.target.value === 'new') {
+        shopSelect.classList.add('hidden');
+        shopInput.classList.add('active');
+        shopInput.value = '';
+        shopInput.focus();
+      }
+    };
+  }
+
   document.getElementById('startBtn').onclick = () => {
-    const shop = document.getElementById('shopInput').value.trim();
-    const tab = document.getElementById('tabInput').value.trim();
-    if (!shop) { alert('Введите номер магазина'); return; }
+    const shop = shopSelect && !shopSelect.classList.contains('hidden') 
+                 ? shopSelect.value 
+                 : shopInput.value.trim();
+                 
+    const tab = tabInput.value.trim();
+    
+    if (!shop || shop === 'new') { alert('Введите номер магазина'); return; }
     if (!tab) { alert('Введите табельный номер'); return; }
-    state.shopId = shop; state.tabNumber = tab; renderLevels();
+    
+    state.shopId = shop; 
+    state.tabNumber = tab; 
+    renderLevels();
   };
 
   if (shops.length > 0) {
@@ -491,7 +522,7 @@ function renderResultsView() {
       ${employees.map(([tab, data], i) => {
         const best = data.history.length > 0 ? data.history.reduce((acc, h) => (h.score / h.total) > acc.p ? { p: h.score / h.total, h } : acc, { p: -1, h: null }).h : null;
         const last = data.history.length > 0 ? data.history[data.history.length - 1] : null;
-        return `<tr><td style="color:#64748b;">${i + 1}</td><td><b style="color:var(--text-0);">${escapeHtml(tab)}</b></td><td><span class="lvl-pill ${levelBadge(data.level)}">${levelIcon(data.level)} ${levelName(data.level)}</span></td><td>${data.attempts}</td><td class="score-cell">${best ? `${best.score}/${best.total}` : '—'}</td><td style="color:#94a3b8;font-size:0.76rem;">${last ? `${levelIcon(last.level)} ${last.score}/${last.total} · ${formatDate(last.date)}` : '—'}</td><td><button class="btn danger small" data-del-tab="${escapeHtml(tab)}" title="Удалить запись">✕</button></td></tr>`;
+        return `<tr data-row-tab="${escapeHtml(tab)}"><td style="color:#64748b;">${i + 1}</td><td><b style="color:var(--text-0);">${escapeHtml(tab)}</b></td><td><span class="lvl-pill ${levelBadge(data.level)}">${levelIcon(data.level)} ${levelName(data.level)}</span></td><td>${data.attempts}</td><td class="score-cell">${best ? `${best.score}/${best.total}` : '—'}</td><td style="color:#94a3b8;font-size:0.76rem;">${last ? `${levelIcon(last.level)} ${last.score}/${last.total} · ${formatDate(last.date)}` : '—'}</td><td><button class="btn danger small" data-del-tab="${escapeHtml(tab)}" title="Удалить запись">✕</button></td></tr>`;
       }).join('')}
     </tbody></table>`;
 
@@ -500,18 +531,18 @@ function renderResultsView() {
     <div class="page-title" style="margin-top:20px;">Результаты магазинов</div>
     <p class="subtitle">Все прохождения по табельным номерам</p>
     <div class="stats" style="margin-bottom:20px;">
-      <div class="stat"><div class="val">${totalEmployees}</div><div class="lbl">Сотрудников</div></div>
-      <div class="stat"><div class="val">${totalAttempts}</div><div class="lbl">Всего попыток</div></div>
-      <div class="stat"><div class="val">${promoted}</div><div class="lbl">Повышенных</div></div>
+      <div class="stat"><div class="val" id="stat-employees">${totalEmployees}</div><div class="lbl">Сотрудников</div></div>
+      <div class="stat"><div class="val" id="stat-attempts">${totalAttempts}</div><div class="lbl">Всего попыток</div></div>
+      <div class="stat"><div class="val" id="stat-promoted">${promoted}</div><div class="lbl">Повышенных</div></div>
     </div>
-    <div class="table-wrap"><h4><span>Результаты <span class="count">· ${employees.length} сотр.</span></span></h4>${shopTabsHtml}${tableHtml}</div>
+    <div class="table-wrap"><h4><span>Результаты <span class="count" id="table-count">· ${employees.length} сотр.</span></span></h4>${shopTabsHtml}${tableHtml}</div>
     <div class="btn-row" style="margin-top:20px;"><button class="btn secondary" id="backBtn">← На главную</button></div>
   `;
 
   document.querySelectorAll('.shop-tab').forEach(tab => { tab.onclick = () => { state.viewShopId = tab.dataset.shop; renderResultsView(); }; });
   document.getElementById('backBtn').onclick = () => { state.viewShopId = null; renderStart(); };
 
-  /* Обработчик удаления */
+  // Обработчик удаления с мгновенным обновлением
   document.querySelectorAll('[data-del-tab]').forEach(btn => {
     btn.onclick = async () => {
       const tab = btn.dataset.delTab;
@@ -519,14 +550,46 @@ function renderResultsView() {
       if (password === null) return; 
       if (password !== 'admin') { alert("Неверный пароль!"); return; }
       if (!confirm(`Удалить ВСЕ результаты сотрудника ${tab}?`)) return;
+      
       try {
         const response = await fetch('/.netlify/functions/delete-result', {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ shopId: activeShop, tabNumber: tab })
         });
         if (!response.ok) throw new Error('Сервер не ответил');
-        await fetchAllResults();
-        renderResultsView();
-        alert("Запись удалена.");
+        
+        // Мгновенное обновление локальных данных без перезагрузки страницы
+        allResultsData = allResultsData.filter(r => !(r.shopId === activeShop && r.tabNumber === tab));
+        
+        // Находим строку и плавно удаляем её
+        const row = document.querySelector(`tr[data-row-tab="${tab}"]`);
+        if (row) {
+          row.style.transition = 'opacity 0.3s ease';
+          row.style.opacity = '0';
+          setTimeout(() => {
+            row.remove();
+            // Обновляем счетчики
+            const newShopData = getShopData(activeShop);
+            const newEmployeesCount = Object.keys(newShopData.employees).length;
+            
+            const statEmp = document.getElementById('stat-employees');
+            if (statEmp) statEmp.textContent = newEmployeesCount;
+            
+            const statAtt = document.getElementById('stat-attempts');
+            if (statAtt) statAtt.textContent = Object.values(newShopData.employees).reduce((s, d) => s + d.attempts, 0);
+            
+            const tableCount = document.getElementById('table-count');
+            if (tableCount) tableCount.textContent = `· ${newEmployeesCount} сотр.`;
+
+            // Обновляем бейдж на табе магазина
+            const activeTab = document.querySelector(`.shop-tab.active .tab-count`);
+            if (activeTab) activeTab.textContent = newEmployeesCount;
+
+            // Если таблица стала пустой
+            if (newEmployeesCount === 0) {
+              renderResultsView();
+            }
+          }, 300);
+        }
       } catch (error) {
         console.error(error); alert("Ошибка удаления. Возможно, функция на сервере не настроена.");
       }
