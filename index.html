@@ -551,68 +551,107 @@ let state = {
   isAdmin: false
 };
 
-/* ==================== ХРАНИЛИЩЕ ==================== */
-const STORAGE_KEY = 'fr_exam_v2'; // новая версия ключа, чтобы избежать конфликтов со старой
+/* ==================== API И ХРАНИЛИЩЕ ==================== */
+let allResultsData = []; // Глобальная переменная для всех данных с сервера
+let isLoading = true;    // Флаг загрузки
 
-function getAll() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
-  catch(e) { return {}; }
+// Загрузка всех данных с сервера
+async function fetchAllResults() {
+  try {
+    const response = await fetch('/.netlify/functions/get-results');
+    allResultsData = await response.json();
+    isLoading = false;
+  } catch (error) {
+    console.error('Ошибка загрузки данных:', error);
+    alert('Не удалось загрузить данные с сервера. Проверьте интернет.');
+    isLoading = false;
+  }
 }
-function saveAll(data) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
-  catch(e) { console.error('Не удалось сохранить:', e); }
+
+// Вспомогательные функции для работы с загруженными данными в памяти
+function getAllShops() {
+  const shops = new Set(allResultsData.map(r => r.shopId));
+  return Array.from(shops).sort();
 }
+
 function getShopData(shopId) {
-  const all = getAll();
-  return all[shopId] || { employees: {} };
+  const shopResults = allResultsData.filter(r => r.shopId === shopId);
+  const employees = {};
+  
+  shopResults.forEach(r => {
+    if (!employees[r.tabNumber]) {
+      employees[r.tabNumber] = { level: 'intern', attempts: 0, history: [] };
+    }
+    employees[r.tabNumber].history.push({
+      level: r.level,
+      score: r.score,
+      total: r.total,
+      date: r.date
+    });
+  });
+
+  // Вычисляем текущий уровень и количество попыток
+  Object.keys(employees).forEach(tab => {
+    const emp = employees[tab];
+    emp.attempts = emp.history.length;
+    // Сортируем историю по дате
+    emp.history.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    // Восстанавливаем логику повышения
+    emp.level = 'intern';
+    emp.history.forEach(h => {
+      const percent = (h.score / h.total) * 100;
+      if (percent >= PASS_PERCENT) {
+        if (emp.level === 'intern' && h.level === 'intern') emp.level = 'junior';
+        else if (emp.level === 'junior' && h.level === 'middle') emp.level = 'senior';
+        else if (emp.level === 'middle' && h.level === 'middle') emp.level = 'senior';
+      }
+    });
+  });
+
+  return { employees };
 }
-function getAllShops() { return Object.keys(getAll()).sort(); }
+
 function getEmployee(shopId, tab) {
   const shop = getShopData(shopId);
   return shop.employees[tab] || null;
 }
-function getOrCreateEmployee(shopId, tab) {
-  const all = getAll();
-  if (!all[shopId]) all[shopId] = { employees: {} };
-  if (!all[shopId].employees[tab]) {
-    all[shopId].employees[tab] = { level: 'intern', attempts: 0, history: [] };
-    saveAll(all);
+
+// Сохранение результата на сервер
+async function recordAttempt(shopId, tab, level, score, total) {
+  const newRecord = {
+    shopId,
+    tabNumber: tab,
+    level,
+    score,
+    total,
+    date: new Date().toISOString()
+  };
+
+  try {
+    await fetch('/.netlify/functions/save-result', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newRecord)
+    });
+    
+    // Обновляем локальную копию, чтобы не перезагружать страницу
+    allResultsData.push(newRecord);
+    return getEmployee(shopId, tab); // Возвращаем обновленные данные сотрудника
+  } catch (error) {
+    console.error('Ошибка сохранения:', error);
+    alert('Не удалось сохранить результат. Проверьте интернет.');
+    throw error;
   }
-  return all[shopId].employees[tab];
 }
 
-function recordAttempt(shopId, tab, level, score, total) {
-  const all = getAll();
-  if (!all[shopId]) all[shopId] = { employees: {} };
-  if (!all[shopId].employees[tab]) all[shopId].employees[tab] = { level: 'intern', attempts: 0, history: [] };
-  const emp = all[shopId].employees[tab];
-  emp.attempts += 1;
-  emp.history.push({ level, score, total, date: new Date().toISOString() });
-
-  const percent = (score / total) * 100;
-  const passed = percent >= PASS_PERCENT;
-
-  if (passed) {
-    if (emp.level === 'intern' && level === 'intern') emp.level = 'junior';
-    else if (emp.level === 'junior' && level === 'middle') emp.level = 'senior';
-    else if (emp.level === 'middle' && level === 'middle') emp.level = 'senior';
-  }
-
-  saveAll(all);
-  return emp;
-}
-
+// Удаление сотрудника (пока оставим заглушку для локального удаления, 
+// полноценное удаление с сервера требует отдельной функции, которую мы сделаем позже)
 function deleteEmployee(shopId, tab) {
-  const all = getAll();
-  if (all[shopId] && all[shopId].employees[tab]) {
-    delete all[shopId].employees[tab];
-    saveAll(all);
-  }
+  alert("Удаление временно недоступно. Требуется настройка серверной функции удаления.");
 }
 function deleteShop(shopId) {
-  const all = getAll();
-  delete all[shopId];
-  saveAll(all);
+  alert("Удаление магазина временно недоступно. Требуется настройка серверной функции удаления.");
 }
 
 /* ==================== АДМИН-МОДАЛКА ==================== */
@@ -1215,15 +1254,16 @@ function nextQuestion() {
   else renderQuestion();
 }
 
-function renderResult() {
+async function renderResult() {
   const total = state.sessionQuestions.length;
   const score = state.score;
   const percent = Math.round((score / total) * 100);
   const passed = percent >= PASS_PERCENT;
 
   const oldEmp = getEmployee(state.shopId, state.tabNumber);
-  const oldLevel = oldEmp ? oldEmp.level : 'intern';
-  const updatedEmp = recordAttempt(state.shopId, state.tabNumber, state.level, score, total);
+const oldLevel = oldEmp ? oldEmp.level : 'intern';
+// Теперь это асинхронный вызов
+const updatedEmp = await recordAttempt(state.shopId, state.tabNumber, state.level, score, total);
   const newLevel = updatedEmp.level;
   const promoted = LEVEL_ORDER.indexOf(newLevel) > LEVEL_ORDER.indexOf(oldLevel);
 
@@ -1351,7 +1391,8 @@ function renderShopTable() {
 }
 
 /* ==================== СТАРТ ==================== */
-renderStart();
-</script>
-</body>
-</html>
+async function init() {
+  await fetchAllResults();
+  renderStart();
+}
+init();
